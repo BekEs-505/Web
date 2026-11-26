@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>⚡ Repo Deb Downloader · Lite v4.0</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0e17;color:#e8eefc;font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;padding:20px}
+.wrap{max-width:1200px;margin:0 auto}
+h1{font-size:24px;background:linear-gradient(90deg,#22d3ee,#a855f7);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:18px;text-align:center;font-weight:900}
+.card{background:#131a28;border:1px solid #1e2a3e;border-radius:12px;padding:16px;margin-bottom:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+input{flex:1;min-width:200px;padding:11px 14px;background:#0a0e17;border:1px solid #1e2a3e;border-radius:8px;color:#e8eefc;font:13px ui-monospace,monospace;direction:ltr;outline:none;transition:.15s}
+input:focus{border-color:#22d3ee;box-shadow:0 0 0 2px #22d3ee22}
+button{padding:11px 20px;background:linear-gradient(135deg,#22d3ee,#a855f7);border:none;border-radius:8px;color:#04121a;font-weight:700;cursor:pointer;font:14px system-ui;transition:.15s}
+button:hover:not(:disabled){filter:brightness(1.1)}
+button:disabled{opacity:.4;cursor:not-allowed}
+button.ghost{background:#1e2a3e;color:#e8eefc}
+button.sm{padding:6px 12px;font-size:12px;border-radius:6px}
+select{padding:10px;background:#0a0e17;border:1px solid #1e2a3e;border-radius:8px;color:#e8eefc;font:13px ui-monospace,monospace;cursor:pointer}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.chip{padding:7px 12px;background:#0a0e17;border:1px solid #1e2a3e;border-radius:6px;color:#7b88a8;font:12px ui-monospace,monospace;cursor:pointer;user-select:none;transition:.15s}
+.chip:hover{color:#e8eefc}
+.chip.on{background:#22d3ee22;border-color:#22d3ee;color:#c8f6ff}
+.console{background:#05070c;border-radius:8px;padding:12px;font:12px ui-monospace,monospace;max-height:180px;overflow:auto;direction:ltr;text-align:left}
+.cl{display:flex;gap:6px;padding:1px 0;line-height:1.6}
+.cl .t{flex-shrink:0;color:#7b88a8}
+.cl.info .t{color:#38bdf8}.cl.ok .t{color:#34d399}.cl.err .t{color:#fb7185}.cl.warn .t{color:#fbbf24}.cl.dim .t{color:#4b5570}
+table{width:100%;border-collapse:collapse;font:12.5px ui-monospace,monospace;direction:ltr;table-layout:fixed}
+th{position:sticky;top:0;background:#0f1520;padding:8px 10px;text-align:left;color:#7b88a8;font-size:10px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #1e2a3e;z-index:2}
+td{padding:7px 10px;border-bottom:1px solid #1e2a3e;font-size:12px;overflow:hidden}
+tr.sel{background:#22d3ee11}
+tbody tr:hover{background:#22d3ee08}
+tbody tr{cursor:pointer}
+.cb{width:15px;height:15px;cursor:pointer;accent-color:#22d3ee;vertical-align:middle}
+.name{font-weight:700;font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pkg{font-size:10.5px;color:#7b88a8;direction:ltr;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ab{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:700;white-space:nowrap}
+.ab.rootless{background:#22d3ee22;color:#67e8f9}
+.ab.roothide{background:#a855f722;color:#c4b5fd}
+.ab.fullroot{background:#34d39922;color:#6ee7b7}
+.ab.all,.ab.unknown{background:#fbbf2422;color:#fcd34d}
+.table-wrap{max-height:500px;overflow:auto;border:1px solid #1e2a3e;border-radius:8px}
+.table-wrap::-webkit-scrollbar{width:8px;height:8px}
+.table-wrap::-webkit-scrollbar-thumb{background:#2a3a52;border-radius:8px}
+.table-wrap::-webkit-scrollbar-track{background:#0a0e17}
+.prog{height:6px;background:#0a0e17;border-radius:99px;overflow:hidden;margin:10px 0}
+.prog>i{display:block;height:100%;background:linear-gradient(90deg,#22d3ee,#a855f7);transition:width .2s;border-radius:99px;width:0}
+.stats{display:flex;gap:14px;flex-wrap:wrap;font:12px ui-monospace,monospace;color:#7b88a8}
+.stats b{color:#e8eefc}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#131a28;border:1px solid #1e2a3e;padding:10px 20px;border-radius:8px;font-size:13px;z-index:1000;animation:tin .25s}
+.toast.ok{border-color:#34d399;color:#a7f3d0}
+.toast.err{border-color:#fb7185;color:#fecdd3}
+.toast.warn{border-color:#fbbf24;color:#fde68a}
+@keyframes tin{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+.hidden{display:none!important}
+.modal{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+.modal.show{display:flex}
+.modal-box{background:#131a28;border:1px solid #1e2a3e;border-radius:12px;padding:20px;max-width:500px;width:100%;max-height:85vh;overflow:auto}
+.px{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #1e2a3e}
+.px label{flex:1;font-size:12.5px;cursor:pointer}
+.px .h{font-size:10px;color:#7b88a8;direction:ltr;margin-top:2px}
+.px input[type=checkbox]{width:18px;height:18px;accent-color:#22d3ee;cursor:pointer}
+@media(max-width:640px){
+  body{padding:12px}
+  h1{font-size:20px}
+  .card{padding:12px}
+  .row{gap:8px}
+  input,select,button{padding:10px 14px;font-size:13px}
+  .stats{font-size:11px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>⚡ Repo Deb Downloader · Lite v4.0</h1>
+  
+  <div class="card">
+    <div class="row">
+      <input id="repoInput" placeholder="https://havoc.app" spellcheck="false" autocomplete="off">
+      <button id="analyzeBtn">🚀 فحص</button>
+      <button class="ghost" id="settingsBtn" title="إعدادات البروكسي">⚙️</button>
+    </div>
+    <div class="chips" id="archChips">
+      <div class="chip on" data-a="all">all</div>
+      <div class="chip" data-a="rootless">rootless</div>
+      <div class="chip" data-a="roothide">roothide</div>
+      <div class="chip" data-a="fullroot">fullroot</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div id="console" class="console">
+      <div class="cl"><span class="t">$</span><span>جاهز — ضع رابط السورس واضغط «فحص»</span></div>
+    </div>
+  </div>
+
+  <div class="card hidden" id="results">
+    <div class="row" style="margin-bottom:10px">
+      <input id="searchInput" placeholder="🔍 بحث بالاسم…" style="flex:1">
+      <span class="stats">الكل <b id="statTotal">0</b> · المحدد <b id="statSel">0</b></span>
+      <button class="ghost sm" id="selAll">الكل</button>
+      <button class="ghost sm" id="selNone">إلغاء</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th style="width:32px"></th>
+          <th>Package</th>
+          <th style="width:110px">Ver</th>
+          <th style="width:110px">Arch</th>
+          <th style="width:70px">Size</th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <div id="progWrap" class="hidden" style="margin-top:10px">
+      <div class="prog"><i id="progBar"></i></div>
+      <div class="stats">
+        <span>✓ نجح <b id="mOk">0</b></span>
+        <span>✗ فشل <b id="mFail">0</b></span>
+        <span>⊘ تخطّى <b id="mSkip">0</b></span>
+        <span>⚡ <b id="mSpeed">0</b>/ث</span>
+        <span>⏳ <b id="mEta">—</b></span>
+      </div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <select id="saveMode">
+        <option value="fs">📁 مجلد مباشر (∞ غير محدود)</option>
+        <option value="single" selected>⬇️ ملفات منفصلة</option>
+        <option value="zip">🗜️ ملف ZIP</option>
+      </select>
+      <button id="dlSelBtn" disabled>⬇️ تحميل المحدد</button>
+      <button class="ghost" id="dlAllBtn" disabled>📦 تحميل الكل</button>
+      <button class="ghost hidden" id="cancelBtn">⏹ إيقاف</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="settingsModal">
+  <div class="modal-box">
+    <h3 style="margin-bottom:10px">⚙️ البروكسيات (CORS)</h3>
+    <p style="font-size:12px;color:#7b88a8;margin-bottom:14px;line-height:1.6">الموقع يجرّب البروكسيات بالترتيب حتى ينجح أحدها ثم يحتفظ به. عطّل أي بروكسي لا تثق به.</p>
+    <div id="proxyList"></div>
+    <button style="width:100%;margin-top:14px" id="closeSettings">حفظ وإغلاق</button>
+  </div>
+</div>
+
+<div id="toasts"></div>
+
+<script>
+'use strict';
+
+/* ═════════ UTILS ═════════ */
+const $=s=>document.querySelector(s);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtSize=b=>{if(!b||b<0)return'—';const u=['B','KB','MB','GB'];let i=0,n=b;while(n>=1024&&i<3){n/=1024;i++}return n.toFixed(n<10&&i>0?1:0)+' '+u[i]};
+
+/* ═════════ CONSOLE ═════════ */
+const conEl=$('#console');
+const TAGS={info:'[i]',ok:'[+]',warn:'[!]',err:'[x]',log:'[*]',dim:'·'};
+function logLine(t,m){
+  const el=document.createElement('div');
+  el.className='cl '+t;
+  el.innerHTML=`<span class="t">${TAGS[t]||'[*]'}</span><span>${esc(m)}</span>`;
+  conEl.appendChild(el);
+  while(conEl.children.length>300)conEl.removeChild(conEl.firstChild);
+  conEl.scrollTop=conEl.scrollHeight;
+}
+const log=m=>logLine('log',m),ok=m=>logLine('ok',m),warn=m=>logLine('warn',m),
+      err=m=>logLine('err',m),info=m=>logLine('info',m),dim=m=>logLine('dim',m);
+
+function toast(m,t=''){
+  const el=document.createElement('div');
+  el.className='toast '+t;el.textContent=m;
+  $('#toasts').appendChild(el);
+  setTimeout(()=>el.remove(),2800);
+}
+
+/* ═════════ PROXIES ═════════ */
+const PROXIES=[
+  {id:'direct',name:'Direct (بدون بروكسي)',host:'direct',on:true,build:u=>u},
+  {id:'corsproxy',name:'corsproxy.io',host:'corsproxy.io',on:true,build:u=>'https://corsproxy.io/?url='+encodeURIComponent(u)},
+  {id:'allorigins',name:'allorigins.win',host:'api.allorigins.win',on:true,build:u=>'https://api.allorigins.win/raw?url='+encodeURIComponent(u)},
+  {id:'codetabs',name:'codetabs.com',host:'api.codetabs.com',on:true,build:u=>'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u)},
+  {id:'corslol',name:'cors.lol',host:'api.cors.lol',on:false,build:u=>'https://api.cors.lol/?url='+encodeURIComponent(u)},
+  {id:'corsworkers',name:'cors.workers.dev',host:'test.cors.workers.dev',on:false,build:u=>'https://test.cors.workers.dev/?'+u},
+];
+const savedPx=JSON.parse(localStorage.getItem('rdd_px')||'null');
+if(savedPx)PROXIES.forEach(p=>{if(p.id in savedPx)p.on=savedPx[p.id]});
+
+/* ═════════ STATE ═════════ */
+const state={
+  arch:'all',repo:'',all:[],filtered:[],selected:new Set(),
+  workingProxy:null,  // cached working proxy
+  running:false,cancelled:false
+};
+
+/* ═════════ FAST FETCH (auto-picks winner) ═════════ */
+async function fastFetch(url,{timeout=30000}={}){
+  const order=state.workingProxy
+    ?[state.workingProxy,...PROXIES.filter(p=>p.on&&p.id!==state.workingProxy.id)]
+    :PROXIES.filter(p=>p.on);
+  
+  for(const p of order){
+    const ctl=new AbortController();
+    const t=setTimeout(()=>ctl.abort(),timeout);
+    try{
+      const res=await fetch(p.build(url),{signal:ctl.signal,cache:'no-store'});
+      clearTimeout(t);
+      if(res.status===404||res.status===410)return null;
+      if(!res.ok)continue;
+      const buf=new Uint8Array(await res.arrayBuffer());
+      if(!buf.length)continue;
+      if(looksHtml(buf))continue;
+      state.workingProxy=p; // cache winner
+      return buf;
+    }catch(e){clearTimeout(t)}
+  }
+  return null;
+}
+
+function looksHtml(u8){
+  if(!u8||!u8.length)return false;
+  const h=new TextDecoder('utf-8',{fatal:false}).decode(u8.subarray(0,300)).toLowerCase();
+  return h.includes('<html')||h.includes('<!doctype')||h.includes('<head>')||h.includes('404 not found');
+}
+const DEB_MAGIC=[0x21,0x3c,0x61,0x72,0x63,0x68,0x3e,0x0a];
+function isDeb(u8){
+  if(!u8||u8.length<8)return false;
+  for(let i=0;i<8;i++)if(u8[i]!==DEB_MAGIC[i])return false;
+  return true;
+}
+
+/* ═════════ STREAMING DEB (unlimited to disk) ═════════ */
+async function streamDeb(url,dirHandle,fileName){
+  const order=state.workingProxy
+    ?[state.workingProxy,...PROXIES.filter(p=>p.on&&p.id!==state.workingProxy.id)]
+    :PROXIES.filter(p=>p.on);
+  
+  let lastErr;
+  for(const p of order){
+    if(state.cancelled)throw new Error('cancelled');
+    try{
+      const ctl=new AbortController();
+      const t=setTimeout(()=>ctl.abort(),180000);
+      const res=await fetch(p.build(url),{signal:ctl.signal,cache:'no-store'});
+      clearTimeout(t);
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      
+      if(dirHandle){
+        /* Stream to disk - unlimited size */
+        const fh=await dirHandle.getFileHandle(fileName,{create:true});
+        const w=await fh.createWritable();
+        try{
+          const reader=res.body.getReader();
+          let headBuf=null,wrote=false;
+          while(true){
+            if(state.cancelled)throw new Error('cancelled');
+            const {done,value}=await reader.read();
+            if(done)break;
+            if(!wrote){
+              if(headBuf){
+                const n=new Uint8Array(headBuf.length+value.length);
+                n.set(headBuf);n.set(value,headBuf.length);
+                headBuf=n;
+              }else headBuf=value;
+              if(headBuf.length>=8){
+                if(!isDeb(headBuf)){
+                  if(looksHtml(headBuf))throw new Error('HTML response');
+                  throw new Error('Not deb');
+                }
+                await w.write(headBuf);
+                wrote=true;headBuf=null;
+              }
+            }else await w.write(value);
+          }
+          if(!wrote)throw new Error('Empty file');
+          await w.close();
+          if(!state.workingProxy)state.workingProxy=p;
+          return null;
+        }catch(e){
+          try{await w.abort()}catch{}
+          throw e;
+        }
+      }else{
+        /* Memory buffer */
+        const buf=new Uint8Array(await res.arrayBuffer());
+        if(!buf.length)throw new Error('Empty');
+        if(!isDeb(buf)){
+          if(looksHtml(buf))throw new Error('HTML response');
+          throw new Error('Not deb');
+        }
+        if(!state.workingProxy)state.workingProxy=p;
+        return buf;
+      }
+    }catch(e){
+      if(e.message==='cancelled')throw e;
+      lastErr=e;
+    }
+  }
+  throw lastErr||new Error('All proxies failed');
+}
+
+/* ═════════ DECOMPRESS ═════════ */
+function sniff(b){
+  if(!b||b.length<4)return'plain';
+  if(b[0]===0x1f&&b[1]===0x8b)return'gzip';
+  if(b[0]===0x42&&b[1]===0x5a&&b[2]===0x68)return'bzip2';
+  if(b[0]===0xfd&&b[1]===0x37&&b[2]===0x7a)return'xz';
+  if(b[0]===0x28&&b[1]===0xb5&&b[2]===0x2f&&b[3]===0xfd)return'zstd';
+  return'plain';
+}
+const _libs={};
+async function loadLib(k,urls){
+  if(_libs[k])return _libs[k];
+  let e;
+  for(const u of urls){
+    try{_libs[k]=await import(u);return _libs[k]}catch(err){e=err}
+  }
+  throw e;
+}
+async function decompress(b,ext){
+  let k=sniff(b);
+  if(k==='plain'&&ext==='lzma')k='lzma';
+  if(k==='plain')return new TextDecoder().decode(b);
+  if(k==='gzip'){
+    try{
+      const ds=new DecompressionStream('gzip');
+      const s=new Blob([b]).stream().pipeThrough(ds);
+      return new TextDecoder().decode(new Uint8Array(await new Response(s).arrayBuffer()));
+    }catch(e){
+      const m=await loadLib('pako',['https://esm.sh/pako@2.1.0','https://cdn.jsdelivr.net/npm/pako@2.1.0/+esm']);
+      return new TextDecoder().decode(m.inflate(b));
+    }
+  }
+  if(k==='bzip2'){
+    const m=await loadLib('bz',['https://esm.sh/seek-bzip@1.0.6','https://cdn.jsdelivr.net/npm/seek-bzip@1.0.6/+esm']);
+    const d=m.decode||(m.default&&m.default.decode)||m.default;
+    return new TextDecoder().decode(d(b));
+  }
+  if(k==='zstd'){
+    const m=await loadLib('zst',['https://esm.sh/fzstd@0.1.1','https://cdn.jsdelivr.net/npm/fzstd@0.1.1/+esm']);
+    const d=m.decompress||(m.default&&m.default.decompress)||m.default;
+    return new TextDecoder().decode(d(b));
+  }
+  if(k==='xz'||k==='lzma'){
+    const m=await loadLib('xz',['https://esm.sh/xz-decompress@1.0.0','https://cdn.jsdelivr.net/npm/xz-decompress@1.0.0/+esm']);
+    const d=m.decompress||(m.default&&m.default.decompress)||m.default;
+    return new TextDecoder().decode(await d(b));
+  }
+  throw new Error('صيغة غير مدعومة');
+}
+
+/* ═════════ PARSING ═════════ */
+function parsePkgs(text){
+  const out=[];
+  const blocks=text.split(/\r?\n\s*\r?\n/);
+  for(const b of blocks){
+    if(!b.trim())continue;
+    const r={};let k=null;
+    for(const ln of b.split(/\r?\n/)){
+      if(/^\s/.test(ln)&&k){r[k]+=' '+ln.trim();continue}
+      const i=ln.indexOf(':');
+      if(i<0)continue;
+      const kk=ln.slice(0,i).trim(),vv=ln.slice(i+1).trim();
+      if(kk){r[kk]=vv;k=kk}
+    }
+    if(r.Filename)out.push(r);
+  }
+  return out;
+}
+function inferArch(fn){
+  if(/iphoneos-arm64e\.deb$/i.test(fn))return'iphoneos-arm64e';
+  if(/iphoneos-arm64\.deb$/i.test(fn))return'iphoneos-arm64';
+  if(/iphoneos-arm\.deb$/i.test(fn))return'iphoneos-arm';
+  if(/_all\.deb$/i.test(fn))return'all';
+  return'';
+}
+function matchArch(arch,fn,mode){
+  const f=inferArch(fn);
+  let e=arch||f||'unknown';
+  if(mode==='all')return true;
+  if(e==='all'||f==='all')return true;
+  if(mode==='rootless')return e==='iphoneos-arm64'||f==='iphoneos-arm64';
+  if(mode==='roothide')return e==='iphoneos-arm64e'||f==='iphoneos-arm64e';
+  if(mode==='fullroot')return e==='iphoneos-arm'||f==='iphoneos-arm';
+  return true;
+}
+function resolveUrl(repo,fn){
+  if(/^https?:\/\//i.test(fn))return fn;
+  if(fn.startsWith('./'))return repo+'/'+fn.slice(2);
+  if(fn.startsWith('/'))return repo+fn;
+  return repo+'/'+fn;
+}
+function archBadge(a){
+  const s=String(a||'all');
+  const c=/arm64e/.test(s)?'roothide':/arm64/.test(s)?'rootless':/arm/.test(s)?'fullroot':'all';
+  return `<span class="ab ${c}">${esc(s)}</span>`;
+}
+
+/* ═════════ UI EVENTS ═════════ */
+document.querySelectorAll('#archChips .chip').forEach(c=>c.onclick=()=>{
+  document.querySelectorAll('#archChips .chip').forEach(x=>x.classList.remove('on'));
+  c.classList.add('on');
+  state.arch=c.dataset.a;
+  if(state.all.length){applyFilter();state.selected.clear();renderLimit=200;renderTable()}
+});
+$('#analyzeBtn').onclick=analyze;
+$('#repoInput').onkeydown=e=>{if(e.key==='Enter')analyze()};
+$('#searchInput').oninput=renderTable;
+$('#selAll').onclick=()=>{state.filtered.forEach(p=>state.selected.add(p.__id));renderTable()};
+$('#selNone').onclick=()=>{state.selected.clear();renderTable()};
+$('#dlSelBtn').onclick=()=>download('selected');
+$('#dlAllBtn').onclick=()=>download('all');
+$('#cancelBtn').onclick=()=>{state.cancelled=true;warn('تم طلب الإيقاف…')};
+$('#settingsBtn').onclick=openSettings;
+$('#closeSettings').onclick=()=>{
+  const m={};PROXIES.forEach(p=>m[p.id]=p.on);
+  localStorage.setItem('rdd_px',JSON.stringify(m));
+  state.workingProxy=null;
+  $('#settingsModal').classList.remove('show');
+  toast('تم حفظ الإعدادات','ok');
+};
+$('#settingsModal').onclick=e=>{if(e.target.id==='settingsModal')$('#settingsModal').classList.remove('show')};
+
+function openSettings(){
+  $('#proxyList').innerHTML=PROXIES.map(p=>`
+    <div class="px">
+      <input type="checkbox" id="px_${p.id}" ${p.on?'checked':''}>
+      <label for="px_${p.id}">${esc(p.name)}<div class="h">${esc(p.host)}</div></label>
+    </div>`).join('');
+  PROXIES.forEach(p=>{
+    const el=document.getElementById('px_'+p.id);
+    if(el)el.onchange=()=>p.on=el.checked;
+  });
+  $('#settingsModal').classList.add('show');
+}
+
+/* ═════════ ANALYZE ═════════ */
+function normRepo(v){
+  let r=(v||'').trim().replace(/\s+/g,'');
+  if(!r)return'';
+  r=r.replace(/\/+$/,'');
+  if(!/^https?:\/\//i.test(r))r='https://'+r;
+  return r;
+}
+function repoName(u){
+  try{return new URL(u).host.replace(/[^A-Za-z0-9._-]/g,'_')||'repo'}catch(e){return'repo'}
+}
+
+async function analyze(){
+  if(state.running){warn('عملية جارية…');return}
+  const repo=normRepo($('#repoInput').value);
+  if(!repo){toast('ضع رابط السورس','err');return}
+  
+  /* Single .deb */
+  if(/\.deb(\?.*)?$/i.test(repo)){
+    try{
+      const name=repo.split('/').pop().split('?')[0]||'pkg.deb';
+      log('تحميل: '+name);
+      const r=await streamDeb(repo,null,name);
+      triggerDl(r,name);
+      ok('تم التنزيل: '+name);
+      toast('تم ✓','ok');
+    }catch(e){err('فشل: '+e.message);toast('فشل','err')}
+    return;
+  }
+  
+  state.running=true;state.cancelled=false;state.repo=repo;
+  $('#analyzeBtn').disabled=true;
+  $('#results').classList.add('hidden');
+  state.selected.clear();
+  conEl.innerHTML='';
+  info('Repo: '+repo);
+  log('البحث عن Packages…');
+  
+  try{
+    const found=await findPackages(repo);
+    if(!found){err('لم يوجد Packages');toast('فشل الفحص','err');return}
+    ok('وُجد: '+found.url);
+    if(found.bytes)info('الحجم: '+fmtSize(found.bytes.length));
+    
+    let pkgs;
+    if(found.listing){
+      pkgs=found.listing;
+      ok(pkgs.length+' حزمة من قائمة HTML');
+    }else{
+      log('فك الضغط…');
+      const text=await decompress(found.bytes,found.ext);
+      log('تحليل…');
+      pkgs=parsePkgs(text);
+      ok(pkgs.length+' مدخلة');
+    }
+    if(!pkgs.length){err('لا مدخلات Filename');toast('السورس فارغ','err');return}
+    
+    state.all=pkgs.map((r,i)=>{
+      const fn=r.Filename||'';
+      const base=fn.split('/').pop().split('?')[0]||('pkg_'+i+'.deb');
+      return{
+        __id:i,
+        name:r.Name||r.Package||base,
+        pkg:r.Package||'',
+        version:r.Version||'',
+        arch:r.Architecture||'',
+        size:parseInt(r.Size,10)||0,
+        fileName:base,
+        url:resolveUrl(repo,fn)
+      };
+    });
+    applyFilter();
+    ok('بعد فلترة ('+state.arch+'): '+state.filtered.length);
+    
+    if(!state.filtered.length){warn('لا نتائج مطابقة');toast('لا حزم','warn');return}
+    $('#results').classList.remove('hidden');
+    renderLimit=200;
+    renderTable();
+    $('#results').scrollIntoView({behavior:'smooth',block:'start'});
+    toast(state.filtered.length+' حزمة ✓','ok');
+  }catch(e){
+    err('خطأ: '+e.message);
+    toast('فشل الفحص','err');
+  }finally{
+    state.running=false;
+    $('#analyzeBtn').disabled=false;
+  }
+}
+
+async function findPackages(repo){
+  const isPkg=u=>u.length>20&&!looksHtml(u);
+  const cands=['Packages','Packages.gz','Packages.bz2','Packages.xz','Packages.zst','Packages.lzma'];
+  
+  for(const n of cands){
+    log('جرّب: '+n);
+    const b=await fastFetch(repo+'/'+n,{timeout:25000});
+    if(b&&isPkg(b))return{url:repo+'/'+n,bytes:b,ext:n.split('.').pop()};
+  }
+  
+  log('جرّب dists/stable…');
+  for(const a of ['iphoneos-arm64','iphoneos-arm64e','iphoneos-arm','all']){
+    for(const n of cands){
+      const u=`${repo}/dists/stable/main/binary-${a}/${n}`;
+      const b=await fastFetch(u,{timeout:20000});
+      if(b&&isPkg(b))return{url:u,bytes:b,ext:n.split('.').pop()};
+    }
+  }
+  
+  log('جرّب قائمة HTML…');
+  const h=await fastFetch(repo+'/',{timeout:25000});
+  if(h&&looksHtml(h)){
+    const t=new TextDecoder().decode(h);
+    const links=[...t.matchAll(/href=["']([^"']+\.deb)["']/gi)].map(m=>m[1]);
+    if(links.length){
+      return{listing:links.map(href=>{
+        let u=href;
+        if(!/^https?:\/\//i.test(u)){
+          if(u.startsWith('/'))u=repo+u;
+          else u=repo+'/'+u.replace(/^\.\//,'');
+        }
+        const b=u.split('/').pop().split('?')[0];
+        return{Filename:u,Package:b,Name:b,Version:'',Architecture:inferArch(b)||'unknown',Size:''};
+      })};
+    }
+  }
+  return null;
+}
+
+function applyFilter(){
+  state.filtered=state.all.filter(p=>matchArch(p.arch,p.fileName,state.arch));
+}
+
+/* ═════════ FAST TABLE RENDER ═════════ */
+let renderLimit=200;
+function renderTable(){
+  const q=($('#searchInput').value||'').trim().toLowerCase();
+  let list=state.filtered;
+  if(q)list=list.filter(p=>p.name.toLowerCase().includes(q)||p.pkg.toLowerCase().includes(q));
+  const shown=list.slice(0,renderLimit);
+  const tbody=$('#tbody');
+  
+  if(!shown.length){
+    tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:30px;color:#7b88a8">لا نتائج</td></tr>';
+  }else{
+    const html=[];
+    for(const p of shown){
+      const sel=state.selected.has(p.__id);
+      html.push(`<tr data-id="${p.__id}"${sel?' class="sel"':''}>
+        <td><input type="checkbox" class="cb" data-id="${p.__id}"${sel?' checked':''}></td>
+        <td><div class="name" title="${esc(p.name)}">${esc(p.name)}</div><div class="pkg">${esc(p.pkg||p.fileName)}</div></td>
+        <td style="color:#fbbf24">${esc(p.version||'—')}</td>
+        <td>${archBadge(p.arch)}</td>
+        <td style="color:#7b88a8">${p.size?fmtSize(p.size):'—'}</td>
+      </tr>`);
+    }
+    if(list.length>renderLimit){
+      html.push(`<tr><td colspan="5" style="text-align:center;padding:12px"><button class="ghost sm" id="loadMore">عرض المزيد (${list.length-renderLimit})</button></td></tr>`);
+    }
+    tbody.innerHTML=html.join('');
+    if(list.length>renderLimit){
+      const lm=document.getElementById('loadMore');
+      if(lm)lm.onclick=()=>{renderLimit+=500;renderTable()};
+    }
+  }
+  
+  $('#statTotal').textContent=list.length;
+  $('#statSel').textContent=state.selected.size;
+  
+  /* Events via delegation */
+  tbody.querySelectorAll('tr[data-id]').forEach(tr=>{
+    tr.onclick=e=>{
+      if(e.target.classList.contains('cb'))return;
+      toggleSel(+tr.dataset.id);
+    };
+  });
+  tbody.querySelectorAll('.cb').forEach(cb=>{
+    cb.onchange=()=>toggleSel(+cb.dataset.id);
+  });
+  
+  const has=state.selected.size>0;
+  $('#dlSelBtn').disabled=!has||state.running;
+  $('#dlAllBtn').disabled=!state.filtered.length||state.running;
+}
+function toggleSel(id){
+  if(state.selected.has(id))state.selected.delete(id);
+  else state.selected.add(id);
+  renderTable();
+}
+
+/* ═════════ DOWNLOAD ENGINE ═════════ */
+async function download(scope){
+  if(state.running)return;
+  const list=scope==='selected'?state.filtered.filter(p=>state.selected.has(p.__id)):state.filtered;
+  if(!list.length){toast('لا يوجد','warn');return}
+  
+  state.running=true;state.cancelled=false;
+  $('#dlSelBtn').disabled=true;
+  $('#dlAllBtn').disabled=true;
+  $('#cancelBtn').classList.remove('hidden');
+  $('#progWrap').classList.remove('hidden');
+  
+  const saveMode=$('#saveMode').value;
+  let dirHandle=null;
+  
+  /* File System Access API for unlimited */
+  if(saveMode==='fs'){
+    if(!window.showDirectoryPicker){
+      warn('متصفحك لا يدعم الكتابة المباشرة — استخدم Chrome/Edge أو اختر وضع آخر');
+      state.running=false;
+      $('#dlSelBtn').disabled=false;
+      $('#dlAllBtn').disabled=false;
+      $('#cancelBtn').classList.add('hidden');
+      return;
+    }
+    try{
+      dirHandle=await window.showDirectoryPicker({mode:'readwrite'});
+      ok('✓ المجلد جاهز — تحميل غير محدود');
+    }catch(e){
+      warn('تم إلغاء اختيار المجلد');
+      state.running=false;
+      $('#dlSelBtn').disabled=false;
+      $('#dlAllBtn').disabled=false;
+      $('#cancelBtn').classList.add('hidden');
+      return;
+    }
+  }
+  
+  const rn=repoName(state.repo);
+  const t0=performance.now();
+  let done=0,okC=0,failC=0,skipC=0;
+  const total=list.length;
+  const fails=[];
+  let next=0;
+  const zipEntries=[];
+  
+  function updateProg(){
+    const pct=total?Math.round(done/total*100):0;
+    $('#progBar').style.width=pct+'%';
+    $('#mOk').textContent=okC;
+    $('#mFail').textContent=failC;
+    $('#mSkip').textContent=skipC;
+    const s=(performance.now()-t0)/1000;
+    const r=s>0?done/s:0;
+    $('#mSpeed').textContent=r.toFixed(1);
+    const rem=r>0?Math.ceil((total-done)/r):0;
+    $('#mEta').textContent=done===total?'—':(rem>60?Math.floor(rem/60)+'د'+(rem%60)+'ث':rem+'ث');
+  }
+  
+  async function handleOne(pkg){
+    if(state.cancelled)return;
+    
+    /* Skip if exists */
+    if(dirHandle){
+      try{await dirHandle.getFileHandle(pkg.fileName);skipC++;return}catch(e){}
+    }
+    
+    try{
+      if(dirHandle){
+        await streamDeb(pkg.url,dirHandle,pkg.fileName);
+        okC++;
+      }else if(saveMode==='zip'){
+        const bytes=await streamDeb(pkg.url,null);
+        zipEntries.push({name:rn+'/'+pkg.fileName,data:bytes,crc:crc32(bytes),size:bytes.length});
+        okC++;
+      }else{
+        /* Single file - stream to memory then download */
+        const bytes=await streamDeb(pkg.url,null);
+        triggerDl(bytes,pkg.fileName);
+        okC++;
+        await sleep(350); /* بفاصل لتفادي حجب المتصفح */
+      }
+    }catch(e){
+      if(e.message==='cancelled')return;
+      failC++;fails.push(pkg);
+      logLine('err','✗ '+pkg.fileName+' — '+e.message);
+    }
+  }
+  
+  async function worker(){
+    while(true){
+      if(state.cancelled)return;
+      const i=next++;
+      if(i>=list.length)return;
+      await handleOne(list[i]);
+      done++;updateProg();
+    }
+  }
+  
+  try{
+    log(`بدء تحميل ${total} · توازي ${Math.min(5,total)} · ${saveMode}`);
+    const workers=Array.from({length:Math.min(5,total)},()=>worker());
+    await Promise.all(workers);
+    
+    if(saveMode==='zip'&&zipEntries.length){
+      log('بناء ZIP ('+fmtSize(zipEntries.reduce((a,b)=>a+b.size,0))+')…');
+      const blob=buildZip(zipEntries);
+      triggerDl(blob,`${rn}_${new Date().toISOString().slice(0,10)}.zip`);
+      ok('ZIP: '+fmtSize(blob.size));
+    }
+    
+    dim('─────────────────────');
+    ok(`نجح ${okC} · فشل ${failC} · تخطّى ${skipC}`);
+    
+    if(fails.length){
+      warn('فشلت:');
+      fails.slice(0,10).forEach(p=>logLine('err','• '+p.fileName));
+      if(fails.length>10)dim(`… و${fails.length-10} أخرى`);
+    }
+    toast(`اكتمل: ${okC} نجح`,fails.length?'warn':'ok');
+  }catch(e){
+    err('خطأ: '+e.message);
+  }finally{
+    state.running=false;
+    $('#cancelBtn').classList.add('hidden');
+    renderTable();
+  }
+}
+
+function triggerDl(data,name){
+  const blob=data instanceof Blob?data:new Blob([data],{type:'application/octet-stream'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=name;
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),60000);
+}
+
+/* ═════════ ZIP WRITER ═════════ */
+let _crc=null;
+function crc32(u8){
+  if(!_crc){
+    _crc=new Uint32Array(256);
+    for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);_crc[n]=c>>>0}
+  }
+  let c=0xFFFFFFFF;
+  for(let i=0;i<u8.length;i++)c=_crc[(c^u8[i])&0xFF]^(c>>>8);
+  return (c^0xFFFFFFFF)>>>0;
+}
+function buildZip(entries){
+  const enc=new TextEncoder(),parts=[],cd=[];let off=0;
+  for(const e of entries){
+    const nb=enc.encode(e.name);
+    const lh=new Uint8Array(30+nb.length),d1=new DataView(lh.buffer);
+    d1.setUint32(0,0x04034b50,true);d1.setUint16(4,20,true);d1.setUint16(6,0x0800,true);
+    d1.setUint32(14,e.crc,true);d1.setUint32(18,e.size,true);d1.setUint32(22,e.size,true);
+    d1.setUint16(26,nb.length,true);lh.set(nb,30);
+    parts.push(lh,e.data);
+    const c=new Uint8Array(46+nb.length),d2=new DataView(c.buffer);
+    d2.setUint32(0,0x02014b50,true);d2.setUint16(4,20,true);d2.setUint16(6,20,true);
+    d2.setUint16(8,0x0800,true);d2.setUint32(16,e.crc,true);
+    d2.setUint32(20,e.size,true);d2.setUint32(24,e.size,true);
+    d2.setUint16(28,nb.length,true);d2.setUint32(42,off,true);
+    c.set(nb,46);cd.push(c);
+    off+=lh.length+e.data.length;
+  }
+  const cs=cd.reduce((a,b)=>a+b.length,0);
+  const eo=new Uint8Array(22),d3=new DataView(eo.buffer);
+  d3.setUint32(0,0x06054b50,true);d3.setUint16(8,entries.length,true);
+  d3.setUint16(10,entries.length,true);d3.setUint32(12,cs,true);d3.setUint32(16,off,true);
+  return new Blob([...parts,...cd,eo],{type:'application/zip'});
+}
+
+/* ═════════ INIT ═════════ */
+(function init(){
+  info('v4.0 جاهز — خفيف وسريع');
+  dim('نصيحة: للتحميل ∞ استخدم Chrome + «📁 مجلد مباشر»');
+  dim('إذا فشل سورس: ⚙️ → فعّل بروكسي آخر');
+})();
+</script>
+</body>
+</html>
