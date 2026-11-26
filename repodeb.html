@@ -2,148 +2,338 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>⚡ Repo Deb Downloader · Lite v4.0</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#04050a">
+<title>Repo Deb Downloader · Web v3.0 · B6_7E</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#0a0e17;color:#e8eefc;font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;padding:20px}
-.wrap{max-width:1200px;margin:0 auto}
-h1{font-size:24px;background:linear-gradient(90deg,#22d3ee,#a855f7);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:18px;text-align:center;font-weight:900}
-.card{background:#131a28;border:1px solid #1e2a3e;border-radius:12px;padding:16px;margin-bottom:14px}
-.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-input{flex:1;min-width:200px;padding:11px 14px;background:#0a0e17;border:1px solid #1e2a3e;border-radius:8px;color:#e8eefc;font:13px ui-monospace,monospace;direction:ltr;outline:none;transition:.15s}
-input:focus{border-color:#22d3ee;box-shadow:0 0 0 2px #22d3ee22}
-button{padding:11px 20px;background:linear-gradient(135deg,#22d3ee,#a855f7);border:none;border-radius:8px;color:#04121a;font-weight:700;cursor:pointer;font:14px system-ui;transition:.15s}
-button:hover:not(:disabled){filter:brightness(1.1)}
-button:disabled{opacity:.4;cursor:not-allowed}
-button.ghost{background:#1e2a3e;color:#e8eefc}
-button.sm{padding:6px 12px;font-size:12px;border-radius:6px}
-select{padding:10px;background:#0a0e17;border:1px solid #1e2a3e;border-radius:8px;color:#e8eefc;font:13px ui-monospace,monospace;cursor:pointer}
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-.chip{padding:7px 12px;background:#0a0e17;border:1px solid #1e2a3e;border-radius:6px;color:#7b88a8;font:12px ui-monospace,monospace;cursor:pointer;user-select:none;transition:.15s}
-.chip:hover{color:#e8eefc}
-.chip.on{background:#22d3ee22;border-color:#22d3ee;color:#c8f6ff}
-.console{background:#05070c;border-radius:8px;padding:12px;font:12px ui-monospace,monospace;max-height:180px;overflow:auto;direction:ltr;text-align:left}
-.cl{display:flex;gap:6px;padding:1px 0;line-height:1.6}
-.cl .t{flex-shrink:0;color:#7b88a8}
-.cl.info .t{color:#38bdf8}.cl.ok .t{color:#34d399}.cl.err .t{color:#fb7185}.cl.warn .t{color:#fbbf24}.cl.dim .t{color:#4b5570}
-table{width:100%;border-collapse:collapse;font:12.5px ui-monospace,monospace;direction:ltr;table-layout:fixed}
-th{position:sticky;top:0;background:#0f1520;padding:8px 10px;text-align:left;color:#7b88a8;font-size:10px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #1e2a3e;z-index:2}
-td{padding:7px 10px;border-bottom:1px solid #1e2a3e;font-size:12px;overflow:hidden}
-tr.sel{background:#22d3ee11}
-tbody tr:hover{background:#22d3ee08}
-tbody tr{cursor:pointer}
-.cb{width:15px;height:15px;cursor:pointer;accent-color:#22d3ee;vertical-align:middle}
-.name{font-weight:700;font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.pkg{font-size:10.5px;color:#7b88a8;direction:ltr;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ab{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:700;white-space:nowrap}
-.ab.rootless{background:#22d3ee22;color:#67e8f9}
-.ab.roothide{background:#a855f722;color:#c4b5fd}
-.ab.fullroot{background:#34d39922;color:#6ee7b7}
-.ab.all,.ab.unknown{background:#fbbf2422;color:#fcd34d}
-.table-wrap{max-height:500px;overflow:auto;border:1px solid #1e2a3e;border-radius:8px}
-.table-wrap::-webkit-scrollbar{width:8px;height:8px}
-.table-wrap::-webkit-scrollbar-thumb{background:#2a3a52;border-radius:8px}
-.table-wrap::-webkit-scrollbar-track{background:#0a0e17}
-.prog{height:6px;background:#0a0e17;border-radius:99px;overflow:hidden;margin:10px 0}
-.prog>i{display:block;height:100%;background:linear-gradient(90deg,#22d3ee,#a855f7);transition:width .2s;border-radius:99px;width:0}
-.stats{display:flex;gap:14px;flex-wrap:wrap;font:12px ui-monospace,monospace;color:#7b88a8}
-.stats b{color:#e8eefc}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#131a28;border:1px solid #1e2a3e;padding:10px 20px;border-radius:8px;font-size:13px;z-index:1000;animation:tin .25s}
-.toast.ok{border-color:#34d399;color:#a7f3d0}
-.toast.err{border-color:#fb7185;color:#fecdd3}
-.toast.warn{border-color:#fbbf24;color:#fde68a}
-@keyframes tin{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
-.hidden{display:none!important}
-.modal{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+:root{
+  --bg:#04050a;--glass:rgba(255,255,255,.035);--glass2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.16);
+  --txt:#e8eefc;--dim:#7b88a8;--dim2:#4b5570;
+  --cy:#22d3ee;--pu:#a855f7;--gr:#34d399;--am:#fbbf24;--rd:#fb7185;
+  --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+  --sans:"Inter","Segoe UI",system-ui,-apple-system,"Noto Kufi Arabic",sans-serif;
+  --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  background:radial-gradient(ellipse at top,#0a1520 0%,#04050a 60%);
+  color:var(--txt);font-family:var(--sans);min-height:100vh;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+/* خلفية شبكية ساكنة (بدون حركة) */
+.grid-ov{
+  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.18;
+  background-image:linear-gradient(rgba(120,160,255,.055) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(120,160,255,.055) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 25%,transparent 78%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 25%,transparent 78%);
+}
+.app{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:34px 20px 90px}
+.hero{text-align:center;padding:14px 0 30px}
+.logo-mark{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:86px;height:86px;border-radius:26px;margin-bottom:20px;
+  background:linear-gradient(145deg,rgba(34,211,238,.16),rgba(168,85,247,.16));
+  border:1px solid rgba(120,200,255,.28);
+  box-shadow:0 0 60px rgba(34,211,238,.28),inset 0 1px 0 rgba(255,255,255,.14);
+  font-size:38px;position:relative;
+}
+.logo-mark::after{
+  content:"";position:absolute;inset:-2px;border-radius:28px;padding:2px;
+  background:linear-gradient(140deg,var(--cy),var(--pu),#f472b6);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;opacity:.85;
+}
+h1{
+  font-size:clamp(28px,5.4vw,50px);font-weight:900;letter-spacing:-1.4px;line-height:1.08;
+  background:linear-gradient(96deg,#67e8f9 0%,#a78bfa 34%,#f472b6 64%,#67e8f9 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.sub{margin-top:12px;color:var(--dim);font-size:14.5px}
+.sub b{color:var(--cy);font-weight:700}
+.badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.badge{
+  font-family:var(--mono);font-size:11px;padding:6px 13px;border-radius:99px;
+  border:1px solid var(--line);background:var(--glass);color:var(--dim);
+  display:flex;align-items:center;gap:6px;
+}
+.badge i{width:6px;height:6px;border-radius:50%;background:var(--gr);box-shadow:0 0 8px var(--gr);font-style:normal}
+.badge.b2 i{background:var(--am);box-shadow:0 0 8px var(--am)}
+.badge.b3 i{background:var(--pu);box-shadow:0 0 8px var(--pu)}
+.panel{
+  position:relative;background:var(--glass);border:1px solid var(--line);
+  border-radius:var(--r);backdrop-filter:blur(22px) saturate(150%);
+  -webkit-backdrop-filter:blur(22px) saturate(150%);
+  box-shadow:0 24px 70px -30px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.055);
+  margin-bottom:18px;overflow:hidden;
+}
+.panel::before{
+  content:"";position:absolute;top:0;left:12%;right:12%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(120,220,255,.5),transparent);
+}
+.p-head{display:flex;align-items:center;gap:10px;padding:15px 20px;border-bottom:1px solid var(--line);font-size:13px;font-weight:700}
+.p-head .dot{width:7px;height:7px;border-radius:50%;background:var(--cy);box-shadow:0 0 12px var(--cy)}
+.p-head .tag{margin-inline-start:auto;font-family:var(--mono);font-size:10.5px;color:var(--dim2)}
+.p-body{padding:20px}
+.url-row{display:flex;gap:12px;flex-wrap:wrap}
+.input-wrap{position:relative;flex:1;min-width:250px}
+.input-wrap .ico{position:absolute;inset-inline-start:16px;top:50%;transform:translateY(-50%);font-size:16px;opacity:.55;pointer-events:none}
+input[type=text]{
+  width:100%;padding:15px 46px 15px 16px;border-radius:14px;
+  background:rgba(0,0,0,.34);border:1px solid var(--line2);color:var(--txt);
+  font-family:var(--mono);font-size:14px;direction:ltr;text-align:left;
+  outline:none;transition:.2s;
+}
+input[type=text]:focus{border-color:rgba(34,211,238,.65);box-shadow:0 0 0 4px rgba(34,211,238,.11);background:rgba(0,0,0,.5)}
+input::placeholder{color:var(--dim2)}
+.btn{
+  border:none;cursor:pointer;font-family:var(--sans);font-size:14px;font-weight:800;
+  padding:15px 26px;border-radius:14px;color:#04121a;
+  background:linear-gradient(120deg,#22d3ee,#38bdf8 45%,#a855f7);
+  box-shadow:0 12px 34px -12px rgba(34,211,238,.85);
+  transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:9px;white-space:nowrap;
+}
+.btn:hover:not(:disabled){filter:brightness(1.12);transform:translateY(-1px)}
+.btn:active:not(:disabled){transform:translateY(0) scale(.985)}
+.btn:disabled{opacity:.42;cursor:not-allowed}
+.btn.ghost{background:var(--glass2);color:var(--txt);border:1px solid var(--line2);box-shadow:none;font-weight:700}
+.btn.ghost:hover:not(:disabled){background:rgba(255,255,255,.1);border-color:rgba(34,211,238,.5)}
+.btn.sm{padding:10px 16px;font-size:12.5px;border-radius:11px}
+.opt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.opt{display:flex;flex-direction:column;gap:9px}
+.opt>label{font-size:11.5px;color:var(--dim);letter-spacing:.7px;font-weight:700;text-transform:uppercase}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chip{
+  padding:9px 15px;border-radius:11px;font-size:12.5px;font-weight:700;cursor:pointer;
+  background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--dim);
+  transition:.15s;font-family:var(--mono);user-select:none;
+}
+.chip:hover{border-color:var(--line2);color:var(--txt)}
+.chip.on{background:linear-gradient(120deg,rgba(34,211,238,.2),rgba(168,85,247,.2));border-color:rgba(34,211,238,.55);color:#c8f6ff;box-shadow:0 0 22px -6px rgba(34,211,238,.7)}
+.chip:disabled{opacity:.4;cursor:not-allowed}
+.range-row{display:flex;align-items:center;gap:12px}
+input[type=range]{-webkit-appearance:none;flex:1;height:5px;border-radius:99px;outline:none;background:linear-gradient(90deg,var(--cy),var(--pu))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;height:19px;border-radius:50%;background:#fff;cursor:pointer;box-shadow:0 0 16px rgba(34,211,238,.95)}
+.range-val{font-family:var(--mono);font-size:14px;font-weight:800;color:var(--cy);min-width:34px;text-align:center}
+.console{
+  font-family:var(--mono);font-size:12.4px;line-height:1.85;
+  background:rgba(0,0,0,.5);border-radius:0 0 var(--r) var(--r);
+  padding:16px 20px;max-height:250px;overflow-y:auto;direction:ltr;text-align:left;
+}
+.console::-webkit-scrollbar{width:8px}
+.console::-webkit-scrollbar-thumb{background:rgba(120,180,255,.22);border-radius:9px}
+.cl{display:flex;gap:8px}
+.cl .t{flex-shrink:0;font-weight:700}
+.cl.info .t{color:#38bdf8}.cl.ok .t{color:#34d399}.cl.warn .t{color:#fbbf24}.cl.err .t{color:#fb7185}.cl.log .t{color:#a78bfa}.cl.sys .t{color:#475569}.cl.dim .m{color:#5a6784}
+.cl .m{color:#c3cee6;word-break:break-word}
+.cl.err .m{color:#fda4af}
+.res-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line)}
+.res-bar input[type=text]{padding:10px 14px;font-size:12.5px;border-radius:10px;flex:1;min-width:170px}
+.stat{font-family:var(--mono);font-size:11.5px;color:var(--dim);padding:6px 12px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid var(--line);white-space:nowrap}
+.stat b{color:var(--cy)}
+.table-scroll{max-height:430px;overflow:auto}
+.table-scroll::-webkit-scrollbar{width:9px;height:9px}
+.table-scroll::-webkit-scrollbar-thumb{background:rgba(120,180,255,.22);border-radius:9px}
+table{width:100%;border-collapse:collapse;direction:ltr;font-size:12.8px}
+thead th{
+  position:sticky;top:0;z-index:5;background:rgba(9,13,24,.97);
+  padding:11px 14px;text-align:left;font-size:10.5px;letter-spacing:1px;
+  text-transform:uppercase;color:var(--dim2);font-weight:800;
+  border-bottom:1px solid var(--line2);white-space:nowrap;
+}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.045);cursor:pointer;transition:background .1s}
+tbody tr:hover{background:rgba(34,211,238,.055)}
+tbody tr.sel{background:rgba(34,211,238,.1)}
+tbody tr.sel td:first-child{box-shadow:inset 3px 0 0 var(--cy)}
+td{padding:10px 14px;vertical-align:middle}
+.td-name{font-weight:700;color:#e2ebff;max-width:340px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.td-id{font-family:var(--mono);font-size:10.5px;color:var(--dim2);max-width:340px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:ltr}
+.td-ver{font-family:var(--mono);font-size:11.5px;color:var(--am);white-space:nowrap}
+.td-size{font-family:var(--mono);font-size:11.5px;color:var(--dim);white-space:nowrap}
+.ab{font-family:var(--mono);font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px}
+.ab.rootless{background:rgba(34,211,238,.15);color:#67e8f9;border:1px solid rgba(34,211,238,.35)}
+.ab.roothide{background:rgba(168,85,247,.15);color:#c4b5fd;border:1px solid rgba(168,85,247,.35)}
+.ab.fullroot{background:rgba(52,211,153,.15);color:#6ee7b7;border:1px solid rgba(52,211,153,.35)}
+.ab.all,.ab.unknown{background:rgba(251,191,36,.13);color:#fcd34d;border:1px solid rgba(251,191,36,.32)}
+.cb{appearance:none;-webkit-appearance:none;width:17px;height:17px;border-radius:5px;cursor:pointer;border:1.6px solid var(--line2);background:rgba(0,0,0,.4);position:relative;transition:.12s;flex-shrink:0}
+.cb:checked{background:linear-gradient(135deg,var(--cy),var(--pu));border-color:transparent}
+.cb:checked::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#04121a}
+.empty{padding:52px 20px;text-align:center;color:var(--dim2);font-size:13.5px}
+.empty .big{font-size:44px;margin-bottom:14px;opacity:.4}
+.prog-wrap{padding:18px 20px;display:none}
+.prog-wrap.show{display:block}
+.prog-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px;font-size:12.5px}
+.prog-top .lbl{color:var(--dim);font-weight:700}
+.prog-top .pct{font-family:var(--mono);font-size:19px;font-weight:900;color:var(--cy);text-shadow:0 0 24px rgba(34,211,238,.75)}
+.bar{height:10px;border-radius:99px;background:rgba(0,0,0,.55);overflow:hidden;position:relative;border:1px solid rgba(255,255,255,.06)}
+.bar>i{
+  display:block;height:100%;width:0%;border-radius:99px;
+  background:linear-gradient(90deg,#22d3ee,#38bdf8,#a855f7,#f472b6);
+  transition:width .25s ease;box-shadow:0 0 22px rgba(34,211,238,.85);
+}
+.prog-meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-family:var(--mono);font-size:11.5px;color:var(--dim)}
+.prog-meta span b{color:var(--txt)}
+.modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(2,4,10,.85)}
 .modal.show{display:flex}
-.modal-box{background:#131a28;border:1px solid #1e2a3e;border-radius:12px;padding:20px;max-width:500px;width:100%;max-height:85vh;overflow:auto}
-.px{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #1e2a3e}
-.px label{flex:1;font-size:12.5px;cursor:pointer}
-.px .h{font-size:10px;color:#7b88a8;direction:ltr;margin-top:2px}
-.px input[type=checkbox]{width:18px;height:18px;accent-color:#22d3ee;cursor:pointer}
+.modal-box{width:100%;max-width:560px;background:linear-gradient(170deg,#0b1120,#080c16);border:1px solid var(--line2);border-radius:22px;padding:26px;box-shadow:0 40px 100px -30px #000;max-height:85vh;overflow-y:auto}
+.modal-box h3{font-size:17px;margin-bottom:6px}
+.modal-box p.hint{font-size:12px;color:var(--dim);margin-bottom:18px;line-height:1.7}
+.proxy-item{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:11px;background:rgba(255,255,255,.035);border:1px solid var(--line);margin-bottom:8px}
+.proxy-item label{flex:1;font-size:12.8px;cursor:pointer}
+.proxy-item .host{font-family:var(--mono);font-size:10.5px;color:var(--dim2);direction:ltr}
+.switch{position:relative;width:42px;height:24px;flex-shrink:0}
+.switch input{opacity:0;width:0;height:0}
+.switch i{position:absolute;inset:0;border-radius:99px;background:rgba(255,255,255,.11);transition:.2s;cursor:pointer}
+.switch i::after{content:"";position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;left:3px;transition:.2s}
+.switch input:checked+i{background:linear-gradient(120deg,var(--cy),var(--pu))}
+.switch input:checked+i::after{transform:translateX(18px)}
+#toasts{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:9px;align-items:center;pointer-events:none}
+.toast{padding:12px 22px;border-radius:13px;font-size:13px;font-weight:700;background:rgba(11,17,32,.97);border:1px solid var(--line2);color:var(--txt);box-shadow:0 18px 44px -14px #000;max-width:90vw;text-align:center}
+.toast.ok{border-color:rgba(52,211,153,.6);color:#a7f3d0}
+.toast.err{border-color:rgba(251,113,133,.6);color:#fecdd3}
+.toast.warn{border-color:rgba(251,191,36,.6);color:#fde68a}
+.foot{text-align:center;padding:34px 0 10px;font-size:12px;color:var(--dim2)}
+.foot b{color:var(--dim)}
 @media(max-width:640px){
-  body{padding:12px}
-  h1{font-size:20px}
-  .card{padding:12px}
-  .row{gap:8px}
-  input,select,button{padding:10px 14px;font-size:13px}
-  .stats{font-size:11px}
+  .app{padding:20px 13px 70px}
+  .p-body{padding:15px}
+  .btn{padding:13px 18px;font-size:13px}
+  .td-name,.td-id{max-width:150px}
+  .logo-mark{width:70px;height:70px;font-size:31px}
 }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>⚡ Repo Deb Downloader · Lite v4.0</h1>
-  
-  <div class="card">
-    <div class="row">
-      <input id="repoInput" placeholder="https://havoc.app" spellcheck="false" autocomplete="off">
-      <button id="analyzeBtn">🚀 فحص</button>
-      <button class="ghost" id="settingsBtn" title="إعدادات البروكسي">⚙️</button>
-    </div>
-    <div class="chips" id="archChips">
-      <div class="chip on" data-a="all">all</div>
-      <div class="chip" data-a="rootless">rootless</div>
-      <div class="chip" data-a="roothide">roothide</div>
-      <div class="chip" data-a="fullroot">fullroot</div>
+<div class="grid-ov"></div>
+
+<div class="app">
+<header class="hero">
+  <div class="logo-mark">⚡</div>
+  <h1>REPO · DEB · DOWNLOADER</h1>
+  <div class="sub">نسخة الويب الاحترافية — <b>v3.0 Lite</b> · تحميل ∞ غير محدود</div>
+  <div class="badges">
+    <span class="badge"><i></i> Unlimited ∞</span>
+    <span class="badge b2"><i></i> Streaming</span>
+    <span class="badge b3"><i></i> bz2 · gz · xz · zst</span>
+  </div>
+</header>
+
+<section class="panel">
+  <div class="p-head"><span class="dot"></span> رابط السورس <span class="tag">REPO URL</span></div>
+  <div class="p-body">
+    <div class="url-row">
+      <div class="input-wrap">
+        <span class="ico">🔗</span>
+        <input id="repoInput" type="text" placeholder="https://havoc.app/" spellcheck="false" autocomplete="off">
+      </div>
+      <button class="btn" id="analyzeBtn">🚀 فحص السورس</button>
+      <button class="btn ghost" id="settingsBtn">⚙️</button>
     </div>
   </div>
+</section>
 
-  <div class="card">
-    <div id="console" class="console">
-      <div class="cl"><span class="t">$</span><span>جاهز — ضع رابط السورس واضغط «فحص»</span></div>
-    </div>
-  </div>
-
-  <div class="card hidden" id="results">
-    <div class="row" style="margin-bottom:10px">
-      <input id="searchInput" placeholder="🔍 بحث بالاسم…" style="flex:1">
-      <span class="stats">الكل <b id="statTotal">0</b> · المحدد <b id="statSel">0</b></span>
-      <button class="ghost sm" id="selAll">الكل</button>
-      <button class="ghost sm" id="selNone">إلغاء</button>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr>
-          <th style="width:32px"></th>
-          <th>Package</th>
-          <th style="width:110px">Ver</th>
-          <th style="width:110px">Arch</th>
-          <th style="width:70px">Size</th>
-        </tr></thead>
-        <tbody id="tbody"></tbody>
-      </table>
-    </div>
-    <div id="progWrap" class="hidden" style="margin-top:10px">
-      <div class="prog"><i id="progBar"></i></div>
-      <div class="stats">
-        <span>✓ نجح <b id="mOk">0</b></span>
-        <span>✗ فشل <b id="mFail">0</b></span>
-        <span>⊘ تخطّى <b id="mSkip">0</b></span>
-        <span>⚡ <b id="mSpeed">0</b>/ث</span>
-        <span>⏳ <b id="mEta">—</b></span>
+<section class="panel">
+  <div class="p-head"><span class="dot" style="background:var(--pu);box-shadow:0 0 12px var(--pu)"></span> الإعدادات <span class="tag">OPTIONS</span></div>
+  <div class="p-body">
+    <div class="opt-grid">
+      <div class="opt">
+        <label>المعمارية · Arch</label>
+        <div class="chips" id="archChips">
+          <div class="chip on" data-arch="all">all</div>
+          <div class="chip" data-arch="rootless">rootless</div>
+          <div class="chip" data-arch="roothide">roothide</div>
+          <div class="chip" data-arch="fullroot">fullroot</div>
+        </div>
+      </div>
+      <div class="opt">
+        <label>التوازي · Jobs</label>
+        <div class="range-row">
+          <input type="range" id="jobsRange" min="1" max="16" value="4">
+          <span class="range-val" id="jobsVal">4</span>
+        </div>
+      </div>
+      <div class="opt">
+        <label>وضع الحفظ · Save</label>
+        <div class="chips" id="saveChips">
+          <div class="chip on" data-save="fs">📁 مجلد ∞</div>
+          <div class="chip" data-save="single">⬇️ منفصل</div>
+          <div class="chip" data-save="zip">🗜️ ZIP</div>
+        </div>
+      </div>
+      <div class="opt">
+        <label>خيارات إضافية</label>
+        <div class="chips">
+          <div class="chip" id="flatChip">📂 بدون مجلد فرعي</div>
+          <div class="chip" id="listChip">📋 عرض فقط</div>
+        </div>
       </div>
     </div>
-    <div class="row" style="margin-top:12px">
-      <select id="saveMode">
-        <option value="fs">📁 مجلد مباشر (∞ غير محدود)</option>
-        <option value="single" selected>⬇️ ملفات منفصلة</option>
-        <option value="zip">🗜️ ملف ZIP</option>
-      </select>
-      <button id="dlSelBtn" disabled>⬇️ تحميل المحدد</button>
-      <button class="ghost" id="dlAllBtn" disabled>📦 تحميل الكل</button>
-      <button class="ghost hidden" id="cancelBtn">⏹ إيقاف</button>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="p-head"><span class="dot" style="background:var(--gr);box-shadow:0 0 12px var(--gr)"></span> سجل العمليات <span class="tag">CONSOLE</span></div>
+  <div class="console" id="console">
+    <div class="cl sys"><span class="t">$</span><span class="m">repodeb web v3.0 Lite — جاهز. ضع رابط السورس ثم اضغط «فحص السورس».</span></div>
+  </div>
+</section>
+
+<section class="panel" id="resultsPanel" style="display:none">
+  <div class="p-head"><span class="dot" style="background:var(--am);box-shadow:0 0 12px var(--am)"></span> الحزم المكتشفة <span class="tag" id="resultsTag">PACKAGES</span></div>
+  <div class="res-bar">
+    <input type="text" id="searchInput" placeholder="🔍 بحث بالاسم أو المعرّف…" spellcheck="false">
+    <span class="stat">الكل <b id="statTotal">0</b></span>
+    <span class="stat">المحدد <b id="statSel">0</b></span>
+    <button class="btn ghost sm" id="selAllBtn">تحديد الكل</button>
+    <button class="btn ghost sm" id="selNoneBtn">إلغاء</button>
+  </div>
+  <div class="table-scroll">
+    <table>
+      <thead><tr>
+        <th style="width:44px"></th>
+        <th>Package</th>
+        <th style="width:130px">Version</th>
+        <th style="width:130px">Arch</th>
+        <th style="width:90px">Size</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <div class="prog-wrap" id="progWrap">
+    <div class="prog-top">
+      <span class="lbl" id="progLabel">جارٍ التحميل…</span>
+      <span class="pct" id="progPct">0%</span>
+    </div>
+    <div class="bar"><i id="progBar"></i></div>
+    <div class="prog-meta">
+      <span>✓ نجح <b id="mOk">0</b></span>
+      <span>✗ فشل <b id="mFail">0</b></span>
+      <span>⊘ تخطّى <b id="mSkip">0</b></span>
+      <span>⚡ <b id="mSpeed">0</b>/ث</span>
+      <span>⏳ <b id="mEta">—</b></span>
     </div>
   </div>
+  <div style="padding:0 20px 20px;display:flex;gap:10px;flex-wrap:wrap">
+    <button class="btn" id="dlSelectedBtn" disabled>⬇️ تحميل المحدد</button>
+    <button class="btn ghost" id="dlAllBtn" disabled>📦 تحميل الكل ∞</button>
+    <button class="btn ghost" id="cancelBtn" style="display:none;border-color:rgba(251,113,133,.4);color:#fecdd3">⏹ إيقاف</button>
+  </div>
+</section>
+
+<div class="foot">By <b>B6_7E</b> | بيكاس · Web Edition · v3.0 Lite</div>
 </div>
 
 <div class="modal" id="settingsModal">
   <div class="modal-box">
-    <h3 style="margin-bottom:10px">⚙️ البروكسيات (CORS)</h3>
-    <p style="font-size:12px;color:#7b88a8;margin-bottom:14px;line-height:1.6">الموقع يجرّب البروكسيات بالترتيب حتى ينجح أحدها ثم يحتفظ به. عطّل أي بروكسي لا تثق به.</p>
+    <h3>⚙️ إعدادات الشبكة</h3>
+    <p class="hint">المتصفح يمنع الطلبات المباشرة لبعض السورسات بسبب CORS. الموقع يجرّب البروكسيات بالترتيب ويحتفظ بأول ناجح لكل سورس.</p>
     <div id="proxyList"></div>
-    <button style="width:100%;margin-top:14px" id="closeSettings">حفظ وإغلاق</button>
+    <div style="display:flex;gap:10px;margin-top:18px">
+      <button class="btn" style="flex:1" id="closeSettings">حفظ وإغلاق</button>
+    </div>
   </div>
 </div>
 
@@ -152,660 +342,775 @@ tbody tr{cursor:pointer}
 <script>
 'use strict';
 
-/* ═════════ UTILS ═════════ */
-const $=s=>document.querySelector(s);
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const fmtSize=b=>{if(!b||b<0)return'—';const u=['B','KB','MB','GB'];let i=0,n=b;while(n>=1024&&i<3){n/=1024;i++}return n.toFixed(n<10&&i>0?1:0)+' '+u[i]};
-
-/* ═════════ CONSOLE ═════════ */
-const conEl=$('#console');
-const TAGS={info:'[i]',ok:'[+]',warn:'[!]',err:'[x]',log:'[*]',dim:'·'};
-function logLine(t,m){
-  const el=document.createElement('div');
-  el.className='cl '+t;
-  el.innerHTML=`<span class="t">${TAGS[t]||'[*]'}</span><span>${esc(m)}</span>`;
-  conEl.appendChild(el);
-  while(conEl.children.length>300)conEl.removeChild(conEl.firstChild);
-  conEl.scrollTop=conEl.scrollHeight;
-}
-const log=m=>logLine('log',m),ok=m=>logLine('ok',m),warn=m=>logLine('warn',m),
-      err=m=>logLine('err',m),info=m=>logLine('info',m),dim=m=>logLine('dim',m);
-
-function toast(m,t=''){
-  const el=document.createElement('div');
-  el.className='toast '+t;el.textContent=m;
-  $('#toasts').appendChild(el);
-  setTimeout(()=>el.remove(),2800);
-}
-
-/* ═════════ PROXIES ═════════ */
-const PROXIES=[
-  {id:'direct',name:'Direct (بدون بروكسي)',host:'direct',on:true,build:u=>u},
-  {id:'corsproxy',name:'corsproxy.io',host:'corsproxy.io',on:true,build:u=>'https://corsproxy.io/?url='+encodeURIComponent(u)},
-  {id:'allorigins',name:'allorigins.win',host:'api.allorigins.win',on:true,build:u=>'https://api.allorigins.win/raw?url='+encodeURIComponent(u)},
-  {id:'codetabs',name:'codetabs.com',host:'api.codetabs.com',on:true,build:u=>'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u)},
-  {id:'corslol',name:'cors.lol',host:'api.cors.lol',on:false,build:u=>'https://api.cors.lol/?url='+encodeURIComponent(u)},
-  {id:'corsworkers',name:'cors.workers.dev',host:'test.cors.workers.dev',on:false,build:u=>'https://test.cors.workers.dev/?'+u},
-];
-const savedPx=JSON.parse(localStorage.getItem('rdd_px')||'null');
-if(savedPx)PROXIES.forEach(p=>{if(p.id in savedPx)p.on=savedPx[p.id]});
-
-/* ═════════ STATE ═════════ */
-const state={
-  arch:'all',repo:'',all:[],filtered:[],selected:new Set(),
-  workingProxy:null,  // cached working proxy
-  running:false,cancelled:false
+/* ═══════ UTILS ═══════ */
+const $  = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtSize = b => {
+  if (!b || b < 0) return '—';
+  const u = ['B','KB','MB','GB','TB']; let i = 0, n = b;
+  while (n >= 1024 && i < u.length-1) { n /= 1024; i++; }
+  return n.toFixed(n < 10 && i > 0 ? 1 : 0) + ' ' + u[i];
 };
 
-/* ═════════ FAST FETCH (auto-picks winner) ═════════ */
-async function fastFetch(url,{timeout=30000}={}){
-  const order=state.workingProxy
-    ?[state.workingProxy,...PROXIES.filter(p=>p.on&&p.id!==state.workingProxy.id)]
-    :PROXIES.filter(p=>p.on);
-  
-  for(const p of order){
-    const ctl=new AbortController();
-    const t=setTimeout(()=>ctl.abort(),timeout);
-    try{
-      const res=await fetch(p.build(url),{signal:ctl.signal,cache:'no-store'});
+/* ═══════ CONSOLE ═══════ */
+const conEl = $('#console');
+const TAGS = { info:'[i]', ok:'[+]', warn:'[!]', err:'[x]', log:'[*]', sys:'$', dim:'·' };
+function logLine(type, msg) {
+  const el = document.createElement('div');
+  el.className = 'cl ' + type;
+  el.innerHTML = `<span class="t">${TAGS[type]||'[*]'}</span><span class="m">${esc(msg)}</span>`;
+  conEl.appendChild(el);
+  while (conEl.children.length > 400) conEl.removeChild(conEl.firstChild);
+  conEl.scrollTop = conEl.scrollHeight;
+}
+const log=m=>logLine('log',m), ok=m=>logLine('ok',m), warn=m=>logLine('warn',m),
+      err=m=>logLine('err',m), info=m=>logLine('info',m), dim=m=>logLine('dim',m);
+
+function toast(msg, type='') {
+  const t = document.createElement('div');
+  t.className = 'toast ' + type; t.textContent = msg;
+  $('#toasts').appendChild(t);
+  setTimeout(() => t.remove(), 2800);
+}
+
+/* ═══════ PROXIES ═══════ */
+const ALL_PROXIES = [
+  {id:'direct',      name:'اتصال مباشر',    host:'direct',                  on:true,  build:u=>u},
+  {id:'corsproxy',   name:'corsproxy.io',   host:'corsproxy.io',            on:true,  build:u=>'https://corsproxy.io/?url='+encodeURIComponent(u)},
+  {id:'allorigins',  name:'allorigins.win', host:'api.allorigins.win',      on:true,  build:u=>'https://api.allorigins.win/raw?url='+encodeURIComponent(u)},
+  {id:'codetabs',    name:'codetabs.com',   host:'api.codetabs.com',        on:true,  build:u=>'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u)},
+  {id:'corslol',     name:'cors.lol',       host:'api.cors.lol',            on:false, build:u=>'https://api.cors.lol/?url='+encodeURIComponent(u)},
+  {id:'corsorg',     name:'corsproxy.org',  host:'corsproxy.org',           on:false, build:u=>'https://corsproxy.org/?'+encodeURIComponent(u)},
+  {id:'thing',       name:'thingproxy',     host:'thingproxy.freeboard.io', on:false, build:u=>'https://thingproxy.freeboard.io/fetch/'+u},
+  {id:'corsworkers', name:'cors.workers.dev',host:'test.cors.workers.dev',  on:false, build:u=>'https://test.cors.workers.dev/?'+u},
+];
+
+const state = {
+  arch:'all', jobs:4, saveMode:'fs', flat:false, listOnly:false,
+  repo:'', all:[], filtered:[], selected:new Set(),
+  workingProxy:null,         // cached winner per session
+  running:false, cancelled:false
+};
+
+const savedPx = JSON.parse(localStorage.getItem('rdd_px')||'null');
+if (savedPx) ALL_PROXIES.forEach(p => { if (p.id in savedPx) p.on = savedPx[p.id]; });
+
+function activeProxies() { return ALL_PROXIES.filter(p => p.on); }
+
+function proxyOrder() {
+  const list = activeProxies();
+  if (!state.workingProxy) return list;
+  const w = state.workingProxy;
+  if (!w.on) return list;
+  return [w, ...list.filter(p => p.id !== w.id)];
+}
+
+/* ═══════ FETCH ═══════ */
+function looksHtml(u8) {
+  if (!u8 || !u8.length) return false;
+  const h = new TextDecoder('utf-8',{fatal:false}).decode(u8.subarray(0,300)).toLowerCase();
+  return h.includes('<html') || h.includes('<!doctype') || h.includes('<head>') || h.includes('404 not found');
+}
+const DEB_MAGIC=[0x21,0x3c,0x61,0x72,0x63,0x68,0x3e,0x0a];
+function isDeb(u8) {
+  if (!u8 || u8.length < 8) return false;
+  for (let i=0;i<8;i++) if (u8[i]!==DEB_MAGIC[i]) return false;
+  return true;
+}
+
+/* جلب صغير (Packages) — يجرّب البروكسيات ويحفظ الناجح */
+async function fastFetch(url, timeout=30000) {
+  const order = proxyOrder();
+  for (const p of order) {
+    if (state.cancelled) return null;
+    const ctl = new AbortController();
+    const t = setTimeout(() => ctl.abort(), timeout);
+    try {
+      const res = await fetch(p.build(url), {signal:ctl.signal, cache:'no-store'});
       clearTimeout(t);
-      if(res.status===404||res.status===410)return null;
-      if(!res.ok)continue;
-      const buf=new Uint8Array(await res.arrayBuffer());
-      if(!buf.length)continue;
-      if(looksHtml(buf))continue;
-      state.workingProxy=p; // cache winner
+      if (res.status === 404 || res.status === 410) return null;
+      if (!res.ok) continue;
+      const buf = new Uint8Array(await res.arrayBuffer());
+      if (!buf.length) continue;
+      if (looksHtml(buf)) continue;
+      state.workingProxy = p;
       return buf;
-    }catch(e){clearTimeout(t)}
+    } catch(e) { clearTimeout(t); }
   }
   return null;
 }
 
-function looksHtml(u8){
-  if(!u8||!u8.length)return false;
-  const h=new TextDecoder('utf-8',{fatal:false}).decode(u8.subarray(0,300)).toLowerCase();
-  return h.includes('<html')||h.includes('<!doctype')||h.includes('<head>')||h.includes('404 not found');
-}
-const DEB_MAGIC=[0x21,0x3c,0x61,0x72,0x63,0x68,0x3e,0x0a];
-function isDeb(u8){
-  if(!u8||u8.length<8)return false;
-  for(let i=0;i<8;i++)if(u8[i]!==DEB_MAGIC[i])return false;
-  return true;
-}
-
-/* ═════════ STREAMING DEB (unlimited to disk) ═════════ */
-async function streamDeb(url,dirHandle,fileName){
-  const order=state.workingProxy
-    ?[state.workingProxy,...PROXIES.filter(p=>p.on&&p.id!==state.workingProxy.id)]
-    :PROXIES.filter(p=>p.on);
-  
+/* Streaming deb → disk (غير محدود ∞) */
+async function streamDebToDisk(url, dirHandle, fileName) {
+  const order = proxyOrder();
   let lastErr;
-  for(const p of order){
-    if(state.cancelled)throw new Error('cancelled');
-    try{
-      const ctl=new AbortController();
-      const t=setTimeout(()=>ctl.abort(),180000);
-      const res=await fetch(p.build(url),{signal:ctl.signal,cache:'no-store'});
+  for (const p of order) {
+    if (state.cancelled) throw new Error('cancelled');
+    const ctl = new AbortController();
+    const t = setTimeout(() => ctl.abort(), 180000);
+    let writable = null;
+    try {
+      const res = await fetch(p.build(url), {signal:ctl.signal, cache:'no-store'});
       clearTimeout(t);
-      if(!res.ok)throw new Error('HTTP '+res.status);
-      
-      if(dirHandle){
-        /* Stream to disk - unlimited size */
-        const fh=await dirHandle.getFileHandle(fileName,{create:true});
-        const w=await fh.createWritable();
-        try{
-          const reader=res.body.getReader();
-          let headBuf=null,wrote=false;
-          while(true){
-            if(state.cancelled)throw new Error('cancelled');
-            const {done,value}=await reader.read();
-            if(done)break;
-            if(!wrote){
-              if(headBuf){
-                const n=new Uint8Array(headBuf.length+value.length);
-                n.set(headBuf);n.set(value,headBuf.length);
-                headBuf=n;
-              }else headBuf=value;
-              if(headBuf.length>=8){
-                if(!isDeb(headBuf)){
-                  if(looksHtml(headBuf))throw new Error('HTML response');
-                  throw new Error('Not deb');
-                }
-                await w.write(headBuf);
-                wrote=true;headBuf=null;
-              }
-            }else await w.write(value);
+      if (!res.ok) throw new Error('HTTP '+res.status);
+      if (!res.body) throw new Error('no stream');
+
+      const fh = await dirHandle.getFileHandle(fileName, {create:true});
+      writable = await fh.createWritable();
+
+      const reader = res.body.getReader();
+      let headBuf = null, wrote = false;
+      while (true) {
+        if (state.cancelled) throw new Error('cancelled');
+        const {done, value} = await reader.read();
+        if (done) break;
+        if (!wrote) {
+          if (headBuf) {
+            const n = new Uint8Array(headBuf.length + value.length);
+            n.set(headBuf); n.set(value, headBuf.length);
+            headBuf = n;
+          } else {
+            headBuf = value;
           }
-          if(!wrote)throw new Error('Empty file');
-          await w.close();
-          if(!state.workingProxy)state.workingProxy=p;
-          return null;
-        }catch(e){
-          try{await w.abort()}catch{}
-          throw e;
+          if (headBuf.length >= 8) {
+            if (!isDeb(headBuf)) {
+              if (looksHtml(headBuf)) throw new Error('HTML (بروكسي فاشل)');
+              throw new Error('ليس deb');
+            }
+            await writable.write(headBuf);
+            wrote = true;
+            headBuf = null;
+          }
+        } else {
+          await writable.write(value);
         }
-      }else{
-        /* Memory buffer */
-        const buf=new Uint8Array(await res.arrayBuffer());
-        if(!buf.length)throw new Error('Empty');
-        if(!isDeb(buf)){
-          if(looksHtml(buf))throw new Error('HTML response');
-          throw new Error('Not deb');
-        }
-        if(!state.workingProxy)state.workingProxy=p;
-        return buf;
       }
-    }catch(e){
-      if(e.message==='cancelled')throw e;
-      lastErr=e;
+      if (!wrote) throw new Error('ملف فارغ');
+      await writable.close();
+      writable = null;
+      state.workingProxy = p;
+      return;
+    } catch(e) {
+      clearTimeout(t);
+      lastErr = e;
+      if (writable) { try { await writable.abort(); } catch {} }
+      try { await dirHandle.removeEntry(fileName); } catch {}
+      if (e.message === 'cancelled') throw e;
     }
   }
-  throw lastErr||new Error('All proxies failed');
+  throw lastErr || new Error('All proxies failed');
 }
 
-/* ═════════ DECOMPRESS ═════════ */
-function sniff(b){
-  if(!b||b.length<4)return'plain';
-  if(b[0]===0x1f&&b[1]===0x8b)return'gzip';
-  if(b[0]===0x42&&b[1]===0x5a&&b[2]===0x68)return'bzip2';
-  if(b[0]===0xfd&&b[1]===0x37&&b[2]===0x7a)return'xz';
-  if(b[0]===0x28&&b[1]===0xb5&&b[2]===0x2f&&b[3]===0xfd)return'zstd';
-  return'plain';
+/* جلب deb إلى الذاكرة (للـ single/zip) */
+async function fetchDebToBuffer(url) {
+  const order = proxyOrder();
+  let lastErr;
+  for (const p of order) {
+    if (state.cancelled) throw new Error('cancelled');
+    const ctl = new AbortController();
+    const t = setTimeout(() => ctl.abort(), 180000);
+    try {
+      const res = await fetch(p.build(url), {signal:ctl.signal, cache:'no-store'});
+      clearTimeout(t);
+      if (!res.ok) throw new Error('HTTP '+res.status);
+      const buf = new Uint8Array(await res.arrayBuffer());
+      if (!buf.length) throw new Error('ملف فارغ');
+      if (!isDeb(buf)) {
+        if (looksHtml(buf)) throw new Error('HTML (بروكسي فاشل)');
+        throw new Error('ليس deb');
+      }
+      state.workingProxy = p;
+      return buf;
+    } catch(e) { clearTimeout(t); lastErr = e; }
+  }
+  throw lastErr || new Error('All proxies failed');
 }
-const _libs={};
-async function loadLib(k,urls){
-  if(_libs[k])return _libs[k];
+
+/* ═══════ DECOMPRESS ═══════ */
+function sniff(b) {
+  if (!b || b.length < 4) return 'plain';
+  if (b[0]===0x1f && b[1]===0x8b) return 'gzip';
+  if (b[0]===0x42 && b[1]===0x5a && b[2]===0x68) return 'bzip2';
+  if (b[0]===0xfd && b[1]===0x37 && b[2]===0x7a) return 'xz';
+  if (b[0]===0x28 && b[1]===0xb5 && b[2]===0x2f && b[3]===0xfd) return 'zstd';
+  return 'plain';
+}
+const _libs = {};
+async function loadLib(key, urls) {
+  if (_libs[key]) return _libs[key];
   let e;
-  for(const u of urls){
-    try{_libs[k]=await import(u);return _libs[k]}catch(err){e=err}
+  for (const u of urls) {
+    try { _libs[key] = await import(u); return _libs[key]; }
+    catch(err) { e = err; }
   }
   throw e;
 }
-async function decompress(b,ext){
-  let k=sniff(b);
-  if(k==='plain'&&ext==='lzma')k='lzma';
-  if(k==='plain')return new TextDecoder().decode(b);
-  if(k==='gzip'){
-    try{
-      const ds=new DecompressionStream('gzip');
-      const s=new Blob([b]).stream().pipeThrough(ds);
+async function decompress(b, ext) {
+  let k = sniff(b);
+  if (k === 'plain' && ext === 'lzma') k = 'lzma';
+  if (k === 'plain') return new TextDecoder().decode(b);
+  if (k === 'gzip') {
+    try {
+      const ds = new DecompressionStream('gzip');
+      const s = new Blob([b]).stream().pipeThrough(ds);
       return new TextDecoder().decode(new Uint8Array(await new Response(s).arrayBuffer()));
-    }catch(e){
-      const m=await loadLib('pako',['https://esm.sh/pako@2.1.0','https://cdn.jsdelivr.net/npm/pako@2.1.0/+esm']);
+    } catch(e) {
+      const m = await loadLib('pako', ['https://esm.sh/pako@2.1.0','https://cdn.jsdelivr.net/npm/pako@2.1.0/+esm']);
       return new TextDecoder().decode(m.inflate(b));
     }
   }
-  if(k==='bzip2'){
-    const m=await loadLib('bz',['https://esm.sh/seek-bzip@1.0.6','https://cdn.jsdelivr.net/npm/seek-bzip@1.0.6/+esm']);
-    const d=m.decode||(m.default&&m.default.decode)||m.default;
+  if (k === 'bzip2') {
+    const m = await loadLib('bz', ['https://esm.sh/seek-bzip@1.0.6','https://cdn.jsdelivr.net/npm/seek-bzip@1.0.6/+esm']);
+    const d = m.decode || (m.default && m.default.decode) || m.default;
     return new TextDecoder().decode(d(b));
   }
-  if(k==='zstd'){
-    const m=await loadLib('zst',['https://esm.sh/fzstd@0.1.1','https://cdn.jsdelivr.net/npm/fzstd@0.1.1/+esm']);
-    const d=m.decompress||(m.default&&m.default.decompress)||m.default;
+  if (k === 'zstd') {
+    const m = await loadLib('zst', ['https://esm.sh/fzstd@0.1.1','https://cdn.jsdelivr.net/npm/fzstd@0.1.1/+esm']);
+    const d = m.decompress || (m.default && m.default.decompress) || m.default;
     return new TextDecoder().decode(d(b));
   }
-  if(k==='xz'||k==='lzma'){
-    const m=await loadLib('xz',['https://esm.sh/xz-decompress@1.0.0','https://cdn.jsdelivr.net/npm/xz-decompress@1.0.0/+esm']);
-    const d=m.decompress||(m.default&&m.default.decompress)||m.default;
+  if (k === 'xz' || k === 'lzma') {
+    const m = await loadLib('xz', ['https://esm.sh/xz-decompress@1.0.0','https://cdn.jsdelivr.net/npm/xz-decompress@1.0.0/+esm']);
+    const d = m.decompress || (m.default && m.default.decompress) || m.default;
     return new TextDecoder().decode(await d(b));
   }
-  throw new Error('صيغة غير مدعومة');
+  throw new Error('صيغة ضغط غير مدعومة');
 }
 
-/* ═════════ PARSING ═════════ */
-function parsePkgs(text){
-  const out=[];
-  const blocks=text.split(/\r?\n\s*\r?\n/);
-  for(const b of blocks){
-    if(!b.trim())continue;
-    const r={};let k=null;
-    for(const ln of b.split(/\r?\n/)){
-      if(/^\s/.test(ln)&&k){r[k]+=' '+ln.trim();continue}
-      const i=ln.indexOf(':');
-      if(i<0)continue;
-      const kk=ln.slice(0,i).trim(),vv=ln.slice(i+1).trim();
-      if(kk){r[kk]=vv;k=kk}
+/* ═══════ PARSING ═══════ */
+function parsePackages(text) {
+  const out = [];
+  const blocks = text.split(/\r?\n\s*\r?\n/);
+  for (const b of blocks) {
+    if (!b.trim()) continue;
+    const rec = {}; let curKey = null;
+    for (const line of b.split(/\r?\n/)) {
+      if (/^\s/.test(line) && curKey) { rec[curKey] += ' ' + line.trim(); continue; }
+      const i = line.indexOf(':');
+      if (i < 0) continue;
+      const k = line.slice(0, i).trim();
+      const v = line.slice(i + 1).trim();
+      if (k) { rec[k] = v; curKey = k; }
     }
-    if(r.Filename)out.push(r);
+    if (rec.Filename) out.push(rec);
   }
   return out;
 }
-function inferArch(fn){
-  if(/iphoneos-arm64e\.deb$/i.test(fn))return'iphoneos-arm64e';
-  if(/iphoneos-arm64\.deb$/i.test(fn))return'iphoneos-arm64';
-  if(/iphoneos-arm\.deb$/i.test(fn))return'iphoneos-arm';
-  if(/_all\.deb$/i.test(fn))return'all';
-  return'';
+function inferArchFromFile(fn) {
+  if (/iphoneos-arm64e\.deb$/i.test(fn)) return 'iphoneos-arm64e';
+  if (/iphoneos-arm64\.deb$/i.test(fn))  return 'iphoneos-arm64';
+  if (/iphoneos-arm\.deb$/i.test(fn))    return 'iphoneos-arm';
+  if (/_all\.deb$/i.test(fn))            return 'all';
+  return '';
 }
-function matchArch(arch,fn,mode){
-  const f=inferArch(fn);
-  let e=arch||f||'unknown';
-  if(mode==='all')return true;
-  if(e==='all'||f==='all')return true;
-  if(mode==='rootless')return e==='iphoneos-arm64'||f==='iphoneos-arm64';
-  if(mode==='roothide')return e==='iphoneos-arm64e'||f==='iphoneos-arm64e';
-  if(mode==='fullroot')return e==='iphoneos-arm'||f==='iphoneos-arm';
+function matchesArch(arch, fn, mode) {
+  const farch = inferArchFromFile(fn);
+  let eff = arch || farch || 'unknown';
+  if (mode === 'all') return true;
+  if (eff === 'all' || farch === 'all') return true;
+  if (mode === 'rootless') return eff === 'iphoneos-arm64'  || farch === 'iphoneos-arm64';
+  if (mode === 'roothide') return eff === 'iphoneos-arm64e' || farch === 'iphoneos-arm64e';
+  if (mode === 'fullroot') return eff === 'iphoneos-arm'    || farch === 'iphoneos-arm';
   return true;
 }
-function resolveUrl(repo,fn){
-  if(/^https?:\/\//i.test(fn))return fn;
-  if(fn.startsWith('./'))return repo+'/'+fn.slice(2);
-  if(fn.startsWith('/'))return repo+fn;
-  return repo+'/'+fn;
+function resolveUrl(repo, fn) {
+  if (/^https?:\/\//i.test(fn)) return fn;
+  if (fn.startsWith('./')) return repo + '/' + fn.slice(2);
+  if (fn.startsWith('/')) return repo + fn;
+  return repo + '/' + fn;
 }
-function archBadge(a){
-  const s=String(a||'all');
-  const c=/arm64e/.test(s)?'roothide':/arm64/.test(s)?'rootless':/arm/.test(s)?'fullroot':'all';
-  return `<span class="ab ${c}">${esc(s)}</span>`;
+function archBadge(a) {
+  const s = String(a || 'all');
+  const cls = /arm64e/.test(s) ? 'roothide' : /arm64/.test(s) ? 'rootless' : /arm/.test(s) ? 'fullroot' : 'all';
+  return `<span class="ab ${cls}">${esc(s)}</span>`;
 }
 
-/* ═════════ UI EVENTS ═════════ */
-document.querySelectorAll('#archChips .chip').forEach(c=>c.onclick=()=>{
-  document.querySelectorAll('#archChips .chip').forEach(x=>x.classList.remove('on'));
+/* ═══════ CRC32 + ZIP ═══════ */
+let _crc = null;
+function crc32(u8) {
+  if (!_crc) {
+    _crc = new Uint32Array(256);
+    for (let n = 0; n < 256; n++) { let c = n; for (let k=0;k<8;k++) c = (c&1)?(0xEDB88320^(c>>>1)):(c>>>1); _crc[n] = c>>>0; }
+  }
+  let c = 0xFFFFFFFF;
+  for (let i = 0; i < u8.length; i++) c = _crc[(c^u8[i])&0xFF]^(c>>>8);
+  return (c^0xFFFFFFFF)>>>0;
+}
+function buildZip(entries) {
+  const enc = new TextEncoder(), parts = [], cd = []; let off = 0;
+  for (const e of entries) {
+    const nb = enc.encode(e.name);
+    const lh = new Uint8Array(30+nb.length), d1 = new DataView(lh.buffer);
+    d1.setUint32(0,0x04034b50,true); d1.setUint16(4,20,true); d1.setUint16(6,0x0800,true);
+    d1.setUint32(14,e.crc,true); d1.setUint32(18,e.size,true); d1.setUint32(22,e.size,true);
+    d1.setUint16(26,nb.length,true); lh.set(nb,30);
+    parts.push(lh, e.data);
+    const c = new Uint8Array(46+nb.length), d2 = new DataView(c.buffer);
+    d2.setUint32(0,0x02014b50,true); d2.setUint16(4,20,true); d2.setUint16(6,20,true);
+    d2.setUint16(8,0x0800,true); d2.setUint32(16,e.crc,true);
+    d2.setUint32(20,e.size,true); d2.setUint32(24,e.size,true);
+    d2.setUint16(28,nb.length,true); d2.setUint32(42,off,true);
+    c.set(nb,46); cd.push(c);
+    off += lh.length + e.data.length;
+  }
+  const cs = cd.reduce((a,b)=>a+b.length,0);
+  const eo = new Uint8Array(22), d3 = new DataView(eo.buffer);
+  d3.setUint32(0,0x06054b50,true); d3.setUint16(8,entries.length,true);
+  d3.setUint16(10,entries.length,true); d3.setUint32(12,cs,true); d3.setUint32(16,off,true);
+  return new Blob([...parts,...cd,eo], {type:'application/zip'});
+}
+function triggerDownload(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+}
+
+/* ═══════ UI WIRING ═══════ */
+$$('#archChips .chip').forEach(c => c.onclick = () => {
+  $$('#archChips .chip').forEach(x => x.classList.remove('on'));
   c.classList.add('on');
-  state.arch=c.dataset.a;
-  if(state.all.length){applyFilter();state.selected.clear();renderLimit=200;renderTable()}
+  state.arch = c.dataset.arch;
+  if (state.all.length) { applyFilter(); state.selected.clear(); renderLimit = 200; renderTable(); }
 });
-$('#analyzeBtn').onclick=analyze;
-$('#repoInput').onkeydown=e=>{if(e.key==='Enter')analyze()};
-$('#searchInput').oninput=renderTable;
-$('#selAll').onclick=()=>{state.filtered.forEach(p=>state.selected.add(p.__id));renderTable()};
-$('#selNone').onclick=()=>{state.selected.clear();renderTable()};
-$('#dlSelBtn').onclick=()=>download('selected');
-$('#dlAllBtn').onclick=()=>download('all');
-$('#cancelBtn').onclick=()=>{state.cancelled=true;warn('تم طلب الإيقاف…')};
-$('#settingsBtn').onclick=openSettings;
-$('#closeSettings').onclick=()=>{
-  const m={};PROXIES.forEach(p=>m[p.id]=p.on);
-  localStorage.setItem('rdd_px',JSON.stringify(m));
-  state.workingProxy=null;
-  $('#settingsModal').classList.remove('show');
-  toast('تم حفظ الإعدادات','ok');
+$$('#saveChips .chip').forEach(c => c.onclick = () => {
+  $$('#saveChips .chip').forEach(x => x.classList.remove('on'));
+  c.classList.add('on');
+  state.saveMode = c.dataset.save;
+});
+$('#jobsRange').oninput = e => { state.jobs = +e.target.value; $('#jobsVal').textContent = state.jobs; };
+$('#flatChip').onclick = e => { state.flat = !state.flat; e.currentTarget.classList.toggle('on', state.flat); };
+$('#listChip').onclick = e => {
+  state.listOnly = !state.listOnly;
+  e.currentTarget.classList.toggle('on', state.listOnly);
+  $('#dlSelectedBtn').style.display = state.listOnly ? 'none' : '';
+  $('#dlAllBtn').style.display = state.listOnly ? 'none' : '';
 };
-$('#settingsModal').onclick=e=>{if(e.target.id==='settingsModal')$('#settingsModal').classList.remove('show')};
+$('#searchInput').oninput = renderTable;
+$('#selAllBtn').onclick = () => { state.filtered.forEach(p => state.selected.add(p.__id)); renderTable(); };
+$('#selNoneBtn').onclick = () => { state.selected.clear(); renderTable(); };
+$('#settingsBtn').onclick = openSettings;
+$('#closeSettings').onclick = () => {
+  const m = {}; ALL_PROXIES.forEach(p => m[p.id] = p.on);
+  localStorage.setItem('rdd_px', JSON.stringify(m));
+  state.workingProxy = null;
+  $('#settingsModal').classList.remove('show');
+  toast('تم حفظ الإعدادات', 'ok');
+};
+$('#settingsModal').onclick = e => { if (e.target.id === 'settingsModal') $('#settingsModal').classList.remove('show'); };
+$('#analyzeBtn').onclick = analyze;
+$('#repoInput').onkeydown = e => { if (e.key === 'Enter') analyze(); };
+$('#dlSelectedBtn').onclick = () => download('selected');
+$('#dlAllBtn').onclick = () => download('all');
+$('#cancelBtn').onclick = () => { state.cancelled = true; warn('تم طلب الإيقاف…'); };
 
-function openSettings(){
-  $('#proxyList').innerHTML=PROXIES.map(p=>`
-    <div class="px">
-      <input type="checkbox" id="px_${p.id}" ${p.on?'checked':''}>
-      <label for="px_${p.id}">${esc(p.name)}<div class="h">${esc(p.host)}</div></label>
+function openSettings() {
+  $('#proxyList').innerHTML = ALL_PROXIES.map(p => `
+    <div class="proxy-item">
+      <div class="switch">
+        <input type="checkbox" id="px_${p.id}" ${p.on ? 'checked' : ''}>
+        <i></i>
+      </div>
+      <label for="px_${p.id}">${esc(p.name)}<div class="host">${esc(p.host)}</div></label>
     </div>`).join('');
-  PROXIES.forEach(p=>{
-    const el=document.getElementById('px_'+p.id);
-    if(el)el.onchange=()=>p.on=el.checked;
+  ALL_PROXIES.forEach(p => {
+    const el = document.getElementById('px_' + p.id);
+    if (el) el.onchange = () => { p.on = el.checked; state.workingProxy = null; };
   });
   $('#settingsModal').classList.add('show');
 }
 
-/* ═════════ ANALYZE ═════════ */
-function normRepo(v){
-  let r=(v||'').trim().replace(/\s+/g,'');
-  if(!r)return'';
-  r=r.replace(/\/+$/,'');
-  if(!/^https?:\/\//i.test(r))r='https://'+r;
+/* ═══════ ANALYZE ═══════ */
+function normalizeRepo(v) {
+  let r = (v || '').trim().replace(/\s+/g, '');
+  if (!r) return '';
+  r = r.replace(/\/+$/, '');
+  if (!/^https?:\/\//i.test(r)) r = 'https://' + r;
   return r;
 }
-function repoName(u){
-  try{return new URL(u).host.replace(/[^A-Za-z0-9._-]/g,'_')||'repo'}catch(e){return'repo'}
+function repoNameFrom(u) {
+  try { return new URL(u).host.replace(/[^A-Za-z0-9._-]/g, '_') || 'repo'; }
+  catch(e) { return 'repo'; }
 }
 
-async function analyze(){
-  if(state.running){warn('عملية جارية…');return}
-  const repo=normRepo($('#repoInput').value);
-  if(!repo){toast('ضع رابط السورس','err');return}
-  
-  /* Single .deb */
-  if(/\.deb(\?.*)?$/i.test(repo)){
-    try{
-      const name=repo.split('/').pop().split('?')[0]||'pkg.deb';
-      log('تحميل: '+name);
-      const r=await streamDeb(repo,null,name);
-      triggerDl(r,name);
-      ok('تم التنزيل: '+name);
-      toast('تم ✓','ok');
-    }catch(e){err('فشل: '+e.message);toast('فشل','err')}
+async function analyze() {
+  if (state.running) { warn('عملية جارية…'); return; }
+  const repo = normalizeRepo($('#repoInput').value);
+  if (!repo) { toast('ضع رابط السورس أولاً', 'err'); return; }
+
+  /* وضع الملف الواحد */
+  if (/\.deb(\?.*)?$/i.test(repo)) {
+    log('وضع الملف الواحد · Single .deb');
+    const name = repo.split('/').pop().split('?')[0] || 'package.deb';
+    try {
+      const bytes = await fetchDebToBuffer(repo);
+      triggerDownload(new Blob([bytes], {type:'application/octet-stream'}), name);
+      ok('تم التنزيل: ' + name);
+      toast('تم تنزيل الحزمة ✓', 'ok');
+    } catch(e) { err('فشل: ' + e.message); toast('فشل التنزيل', 'err'); }
     return;
   }
-  
-  state.running=true;state.cancelled=false;state.repo=repo;
-  $('#analyzeBtn').disabled=true;
-  $('#results').classList.add('hidden');
+
+  state.running = true; state.cancelled = false; state.repo = repo;
+  $('#analyzeBtn').disabled = true;
+  $('#resultsPanel').style.display = 'none';
   state.selected.clear();
-  conEl.innerHTML='';
-  info('Repo: '+repo);
-  log('البحث عن Packages…');
-  
-  try{
-    const found=await findPackages(repo);
-    if(!found){err('لم يوجد Packages');toast('فشل الفحص','err');return}
-    ok('وُجد: '+found.url);
-    if(found.bytes)info('الحجم: '+fmtSize(found.bytes.length));
-    
+  conEl.innerHTML = '';
+  info('Repo : ' + repo);
+  log('البحث عن ملف Packages…');
+
+  try {
+    const found = await findPackages(repo);
+    if (!found) { err('لم يتم العثور على Packages ولا قائمة HTML.'); toast('تعذّر العثور على الفهرس', 'err'); return; }
+    ok('تم العثور: ' + found.url);
+    if (found.bytes) info('الحجم: ' + fmtSize(found.bytes.length));
+
     let pkgs;
-    if(found.listing){
-      pkgs=found.listing;
-      ok(pkgs.length+' حزمة من قائمة HTML');
-    }else{
+    if (found.viaListing) {
+      pkgs = found.listing;
+      ok('تم العثور على ' + pkgs.length + ' حزمة عبر قائمة HTML');
+    } else {
       log('فك الضغط…');
-      const text=await decompress(found.bytes,found.ext);
-      log('تحليل…');
-      pkgs=parsePkgs(text);
-      ok(pkgs.length+' مدخلة');
+      let text;
+      try { text = await decompress(found.bytes, found.ext); }
+      catch(e) { err('فشل فك الضغط: ' + e.message); toast('صيغة ضغط غير مدعومة', 'err'); return; }
+      log('تحليل الحزم…');
+      pkgs = parsePackages(text);
+      ok('تم تحليل ' + pkgs.length + ' مدخلة');
     }
-    if(!pkgs.length){err('لا مدخلات Filename');toast('السورس فارغ','err');return}
-    
-    state.all=pkgs.map((r,i)=>{
-      const fn=r.Filename||'';
-      const base=fn.split('/').pop().split('?')[0]||('pkg_'+i+'.deb');
-      return{
-        __id:i,
-        name:r.Name||r.Package||base,
-        pkg:r.Package||'',
-        version:r.Version||'',
-        arch:r.Architecture||'',
-        size:parseInt(r.Size,10)||0,
-        fileName:base,
-        url:resolveUrl(repo,fn)
+
+    if (!pkgs.length) { err('لا توجد مدخلات Filename.'); toast('السورس فارغ', 'err'); return; }
+
+    /* بناء الكائنات — الاسم من السورس: Name → Package → Filename */
+    state.all = pkgs.map((r, i) => {
+      const fn = r.Filename || '';
+      const fnBase = fn.split('/').pop().split('?')[0] || '';
+
+      // اسم العرض من السورس (ليس رقماً عشوائياً)
+      let nameField = (r.Name || '').trim();
+      let pkgField  = (r.Package || '').trim();
+      // لو Name أو Package مجرد اسم ملف .deb، تجاهله
+      if (nameField && /^[^\/]+\.deb$/i.test(nameField)) nameField = '';
+      if (pkgField && /^[^\/]+\.deb$/i.test(pkgField)) pkgField = '';
+      // إزالة الامتداد من اسم الملف إن استُخدم
+      const fnDisplay = fnBase.replace(/\.deb$/i, '');
+      const displayName = nameField || pkgField || fnDisplay || ('Item #' + i);
+
+      const fileName = fnBase || `item_${i}.deb`;
+
+      return {
+        __id: i,
+        name: displayName,
+        pkg: pkgField,
+        version: r.Version || '',
+        arch: r.Architecture || '',
+        size: parseInt(r.Size, 10) || 0,
+        fileName: fileName,
+        url: resolveUrl(repo, fn)
       };
     });
+
     applyFilter();
-    ok('بعد فلترة ('+state.arch+'): '+state.filtered.length);
-    
-    if(!state.filtered.length){warn('لا نتائج مطابقة');toast('لا حزم','warn');return}
-    $('#results').classList.remove('hidden');
-    renderLimit=200;
+    ok('بعد فلترة المعمارية (' + state.arch + '): ' + state.filtered.length + ' حزمة');
+
+    if (!state.filtered.length) { warn('لا توجد حزم مطابقة.'); toast('لا توجد حزم مطابقة', 'warn'); return; }
+
+    $('#resultsPanel').style.display = 'block';
+    renderLimit = 200;
     renderTable();
-    $('#results').scrollIntoView({behavior:'smooth',block:'start'});
-    toast(state.filtered.length+' حزمة ✓','ok');
-  }catch(e){
-    err('خطأ: '+e.message);
-    toast('فشل الفحص','err');
-  }finally{
-    state.running=false;
-    $('#analyzeBtn').disabled=false;
+    $('#resultsPanel').scrollIntoView({behavior:'smooth', block:'start'});
+    ok('جاهز للتحميل.');
+    toast('تم العثور على ' + state.filtered.length + ' حزمة ✓', 'ok');
+  } catch(e) {
+    err('خطأ: ' + e.message);
+    toast('حدث خطأ أثناء الفحص', 'err');
+  } finally {
+    state.running = false;
+    $('#analyzeBtn').disabled = false;
   }
 }
 
-async function findPackages(repo){
-  const isPkg=u=>u.length>20&&!looksHtml(u);
-  const cands=['Packages','Packages.gz','Packages.bz2','Packages.xz','Packages.zst','Packages.lzma'];
-  
-  for(const n of cands){
-    log('جرّب: '+n);
-    const b=await fastFetch(repo+'/'+n,{timeout:25000});
-    if(b&&isPkg(b))return{url:repo+'/'+n,bytes:b,ext:n.split('.').pop()};
+async function findPackages(repo) {
+  const isPkg = u8 => u8.length > 20 && !looksHtml(u8);
+  const cands = ['Packages','Packages.gz','Packages.bz2','Packages.xz','Packages.zst','Packages.lzma'];
+
+  for (const n of cands) {
+    log('جرّب: ' + repo + '/' + n);
+    const b = await fastFetch(repo + '/' + n, 25000);
+    if (b && isPkg(b)) return {url: repo+'/'+n, bytes: b, ext: n.split('.').pop()};
   }
-  
-  log('جرّب dists/stable…');
-  for(const a of ['iphoneos-arm64','iphoneos-arm64e','iphoneos-arm','all']){
-    for(const n of cands){
-      const u=`${repo}/dists/stable/main/binary-${a}/${n}`;
-      const b=await fastFetch(u,{timeout:20000});
-      if(b&&isPkg(b))return{url:u,bytes:b,ext:n.split('.').pop()};
+
+  log('جرّب dists/stable/…');
+  for (const a of ['iphoneos-arm64','iphoneos-arm64e','iphoneos-arm','all']) {
+    for (const n of cands) {
+      const u = `${repo}/dists/stable/main/binary-${a}/${n}`;
+      const b = await fastFetch(u, 20000);
+      if (b && isPkg(b)) return {url:u, bytes:b, ext:n.split('.').pop()};
     }
   }
-  
-  log('جرّب قائمة HTML…');
-  const h=await fastFetch(repo+'/',{timeout:25000});
-  if(h&&looksHtml(h)){
-    const t=new TextDecoder().decode(h);
-    const links=[...t.matchAll(/href=["']([^"']+\.deb)["']/gi)].map(m=>m[1]);
-    if(links.length){
-      return{listing:links.map(href=>{
-        let u=href;
-        if(!/^https?:\/\//i.test(u)){
-          if(u.startsWith('/'))u=repo+u;
-          else u=repo+'/'+u.replace(/^\.\//,'');
+
+  log('جرّب قائمة مجلد HTML…');
+  const h = await fastFetch(repo + '/', 25000);
+  if (h && looksHtml(h)) {
+    const t = new TextDecoder().decode(h);
+    const links = [...t.matchAll(/href=["']([^"']+\.deb)["']/gi)].map(m => m[1]);
+    if (links.length) {
+      return {viaListing:true, listing: links.map(href => {
+        let url = href;
+        if (!/^https?:\/\//i.test(url)) {
+          if (url.startsWith('/')) url = repo + url;
+          else url = repo + '/' + url.replace(/^\.\//, '');
         }
-        const b=u.split('/').pop().split('?')[0];
-        return{Filename:u,Package:b,Name:b,Version:'',Architecture:inferArch(b)||'unknown',Size:''};
+        const base = url.split('/').pop().split('?')[0];
+        return {Filename:url, Package:base, Name:base, Version:'', Architecture:inferArchFromFile(base)||'unknown', Size:''};
       })};
     }
   }
   return null;
 }
 
-function applyFilter(){
-  state.filtered=state.all.filter(p=>matchArch(p.arch,p.fileName,state.arch));
+function applyFilter() {
+  state.filtered = state.all.filter(p => matchesArch(p.arch, p.fileName, state.arch));
 }
 
-/* ═════════ FAST TABLE RENDER ═════════ */
-let renderLimit=200;
-function renderTable(){
-  const q=($('#searchInput').value||'').trim().toLowerCase();
-  let list=state.filtered;
-  if(q)list=list.filter(p=>p.name.toLowerCase().includes(q)||p.pkg.toLowerCase().includes(q));
-  const shown=list.slice(0,renderLimit);
-  const tbody=$('#tbody');
-  
-  if(!shown.length){
-    tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:30px;color:#7b88a8">لا نتائج</td></tr>';
-  }else{
-    const html=[];
-    for(const p of shown){
-      const sel=state.selected.has(p.__id);
+/* ═══════ TABLE RENDER (سريع) ═══════ */
+let renderLimit = 200;
+function renderTable() {
+  const q = ($('#searchInput').value || '').trim().toLowerCase();
+  let list = state.filtered;
+  if (q) list = list.filter(p =>
+    p.name.toLowerCase().includes(q) ||
+    p.pkg.toLowerCase().includes(q) ||
+    p.fileName.toLowerCase().includes(q)
+  );
+  const shown = list.slice(0, renderLimit);
+  const tbody = $('#tbody');
+
+  if (!shown.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:40px;color:#7b88a8">لا توجد نتائج</td></tr>';
+  } else {
+    const html = [];
+    for (const p of shown) {
+      const sel = state.selected.has(p.__id);
       html.push(`<tr data-id="${p.__id}"${sel?' class="sel"':''}>
         <td><input type="checkbox" class="cb" data-id="${p.__id}"${sel?' checked':''}></td>
-        <td><div class="name" title="${esc(p.name)}">${esc(p.name)}</div><div class="pkg">${esc(p.pkg||p.fileName)}</div></td>
-        <td style="color:#fbbf24">${esc(p.version||'—')}</td>
+        <td>
+          <div class="td-name" title="${esc(p.name)}">${esc(p.name)}</div>
+          <div class="td-id" title="${esc(p.pkg || p.fileName)}">${esc(p.pkg || p.fileName)}</div>
+        </td>
+        <td><span class="td-ver">${esc(p.version || '—')}</span></td>
         <td>${archBadge(p.arch)}</td>
-        <td style="color:#7b88a8">${p.size?fmtSize(p.size):'—'}</td>
+        <td><span class="td-size">${p.size ? fmtSize(p.size) : '—'}</span></td>
       </tr>`);
     }
-    if(list.length>renderLimit){
-      html.push(`<tr><td colspan="5" style="text-align:center;padding:12px"><button class="ghost sm" id="loadMore">عرض المزيد (${list.length-renderLimit})</button></td></tr>`);
+    if (list.length > renderLimit) {
+      html.push(`<tr><td colspan="5" style="text-align:center;padding:16px"><button class="btn ghost sm" id="loadMore">عرض المزيد (${list.length - renderLimit})</button></td></tr>`);
     }
-    tbody.innerHTML=html.join('');
-    if(list.length>renderLimit){
-      const lm=document.getElementById('loadMore');
-      if(lm)lm.onclick=()=>{renderLimit+=500;renderTable()};
+    tbody.innerHTML = html.join('');
+    if (list.length > renderLimit) {
+      const lm = document.getElementById('loadMore');
+      if (lm) lm.onclick = () => { renderLimit += 500; renderTable(); };
     }
   }
-  
-  $('#statTotal').textContent=list.length;
-  $('#statSel').textContent=state.selected.size;
-  
-  /* Events via delegation */
-  tbody.querySelectorAll('tr[data-id]').forEach(tr=>{
-    tr.onclick=e=>{
-      if(e.target.classList.contains('cb'))return;
+
+  $('#statTotal').textContent = list.length;
+  $('#resultsTag').textContent = list.length + ' PACKAGES';
+
+  tbody.querySelectorAll('tr[data-id]').forEach(tr => {
+    tr.onclick = e => {
+      if (e.target.classList.contains('cb')) return;
       toggleSel(+tr.dataset.id);
     };
   });
-  tbody.querySelectorAll('.cb').forEach(cb=>{
-    cb.onchange=()=>toggleSel(+cb.dataset.id);
+  tbody.querySelectorAll('.cb').forEach(cb => {
+    cb.onchange = () => toggleSel(+cb.dataset.id);
   });
-  
-  const has=state.selected.size>0;
-  $('#dlSelBtn').disabled=!has||state.running;
-  $('#dlAllBtn').disabled=!state.filtered.length||state.running;
+
+  updateSelStat();
 }
-function toggleSel(id){
-  if(state.selected.has(id))state.selected.delete(id);
+function toggleSel(id) {
+  if (state.selected.has(id)) state.selected.delete(id);
   else state.selected.add(id);
   renderTable();
 }
+function updateSelStat() {
+  $('#statSel').textContent = state.selected.size;
+  $('#dlSelectedBtn').disabled = !state.selected.size || state.running;
+  $('#dlAllBtn').disabled = !state.filtered.length || state.running;
+}
 
-/* ═════════ DOWNLOAD ENGINE ═════════ */
-async function download(scope){
-  if(state.running)return;
-  const list=scope==='selected'?state.filtered.filter(p=>state.selected.has(p.__id)):state.filtered;
-  if(!list.length){toast('لا يوجد','warn');return}
-  
-  state.running=true;state.cancelled=false;
-  $('#dlSelBtn').disabled=true;
-  $('#dlAllBtn').disabled=true;
-  $('#cancelBtn').classList.remove('hidden');
-  $('#progWrap').classList.remove('hidden');
-  
-  const saveMode=$('#saveMode').value;
-  let dirHandle=null;
-  
-  /* File System Access API for unlimited */
-  if(saveMode==='fs'){
-    if(!window.showDirectoryPicker){
-      warn('متصفحك لا يدعم الكتابة المباشرة — استخدم Chrome/Edge أو اختر وضع آخر');
-      state.running=false;
-      $('#dlSelBtn').disabled=false;
-      $('#dlAllBtn').disabled=false;
-      $('#cancelBtn').classList.add('hidden');
-      return;
-    }
-    try{
-      dirHandle=await window.showDirectoryPicker({mode:'readwrite'});
-      ok('✓ المجلد جاهز — تحميل غير محدود');
-    }catch(e){
-      warn('تم إلغاء اختيار المجلد');
-      state.running=false;
-      $('#dlSelBtn').disabled=false;
-      $('#dlAllBtn').disabled=false;
-      $('#cancelBtn').classList.add('hidden');
-      return;
-    }
-  }
-  
-  const rn=repoName(state.repo);
-  const t0=performance.now();
-  let done=0,okC=0,failC=0,skipC=0;
-  const total=list.length;
-  const fails=[];
-  let next=0;
-  const zipEntries=[];
-  
-  function updateProg(){
-    const pct=total?Math.round(done/total*100):0;
-    $('#progBar').style.width=pct+'%';
-    $('#mOk').textContent=okC;
-    $('#mFail').textContent=failC;
-    $('#mSkip').textContent=skipC;
-    const s=(performance.now()-t0)/1000;
-    const r=s>0?done/s:0;
-    $('#mSpeed').textContent=r.toFixed(1);
-    const rem=r>0?Math.ceil((total-done)/r):0;
-    $('#mEta').textContent=done===total?'—':(rem>60?Math.floor(rem/60)+'د'+(rem%60)+'ث':rem+'ث');
-  }
-  
-  async function handleOne(pkg){
-    if(state.cancelled)return;
-    
-    /* Skip if exists */
-    if(dirHandle){
-      try{await dirHandle.getFileHandle(pkg.fileName);skipC++;return}catch(e){}
-    }
-    
-    try{
-      if(dirHandle){
-        await streamDeb(pkg.url,dirHandle,pkg.fileName);
-        okC++;
-      }else if(saveMode==='zip'){
-        const bytes=await streamDeb(pkg.url,null);
-        zipEntries.push({name:rn+'/'+pkg.fileName,data:bytes,crc:crc32(bytes),size:bytes.length});
-        okC++;
-      }else{
-        /* Single file - stream to memory then download */
-        const bytes=await streamDeb(pkg.url,null);
-        triggerDl(bytes,pkg.fileName);
-        okC++;
-        await sleep(350); /* بفاصل لتفادي حجب المتصفح */
+/* ═══════ DOWNLOAD ENGINE ═══════ */
+async function download(scope) {
+  if (state.running) { warn('عملية جارية…'); return; }
+  const list = scope === 'selected'
+    ? state.filtered.filter(p => state.selected.has(p.__id))
+    : state.filtered;
+  if (!list.length) { toast('لا توجد حزم للتحميل', 'warn'); return; }
+  if (state.listOnly) { toast('أنت في وضع «عرض فقط» — أوقفه أولاً', 'warn'); return; }
+
+  state.running = true; state.cancelled = false;
+  $('#dlSelectedBtn').disabled = true;
+  $('#dlAllBtn').disabled = true;
+  $('#cancelBtn').style.display = 'inline-flex';
+  $('#progWrap').classList.add('show');
+
+  let dirHandle = null;
+  if (state.saveMode === 'fs') {
+    if (!window.showDirectoryPicker) {
+      warn('متصفحك لا يدعم الكتابة المباشرة — سيتم استخدام ZIP.');
+      state.saveMode = 'zip';
+    } else {
+      try {
+        dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+        ok('✓ المجلد جاهز — تحميل غير محدود ∞');
+      } catch(e) {
+        warn('تم إلغاء اختيار المجلد — استخدام ZIP.');
+        state.saveMode = 'zip';
       }
-    }catch(e){
-      if(e.message==='cancelled')return;
-      failC++;fails.push(pkg);
-      logLine('err','✗ '+pkg.fileName+' — '+e.message);
     }
   }
-  
-  async function worker(){
-    while(true){
-      if(state.cancelled)return;
-      const i=next++;
-      if(i>=list.length)return;
-      await handleOne(list[i]);
-      done++;updateProg();
+
+  const rn = repoNameFrom(state.repo);
+  const zipPrefix = state.flat ? '' : (rn + '/');
+  const zipEntries = [];
+  const zipBytesRef = { total: 0 };
+
+  const total = list.length;
+  let done = 0, okC = 0, failC = 0, skipC = 0;
+  const fails = [];
+  const t0 = performance.now();
+  let nextIndex = 0;
+
+  function updateProg() {
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    $('#progPct').textContent = pct + '%';
+    $('#progBar').style.width = pct + '%';
+    $('#progLabel').textContent = `جارٍ التحميل… ${done}/${total}`;
+    $('#mOk').textContent = okC;
+    $('#mFail').textContent = failC;
+    $('#mSkip').textContent = skipC;
+    const s = (performance.now() - t0) / 1000;
+    const r = s > 0 ? done / s : 0;
+    $('#mSpeed').textContent = r.toFixed(1);
+    const rem = r > 0 ? Math.ceil((total - done) / r) : 0;
+    $('#mEta').textContent = done === total ? '—' : (rem > 60 ? Math.floor(rem/60) + 'د ' + (rem%60) + 'ث' : rem + 'ث');
+  }
+
+  log(`بدء تحميل ${total} حزمة · توازي ${Math.min(state.jobs, total)} · وضع: ${state.saveMode}`);
+
+  async function handleOne(pkg) {
+    if (state.cancelled) return 'cancelled';
+
+    /* تخطي الموجود (مجلد فقط) */
+    if (dirHandle) {
+      try {
+        await dirHandle.getFileHandle(pkg.fileName);
+        return 'skip';
+      } catch(e) {}
+    }
+
+    try {
+      if (dirHandle) {
+        await streamDebToDisk(pkg.url, dirHandle, pkg.fileName);
+        return 'ok';
+      } else if (state.saveMode === 'zip') {
+        const bytes = await fetchDebToBuffer(pkg.url);
+        if (zipBytesRef.total + bytes.length > 3.6 * 1024 * 1024 * 1024) {
+          throw new Error('حجم الأرشيف تجاوز 3.6GB');
+        }
+        zipEntries.push({
+          name: zipPrefix + pkg.fileName,
+          data: bytes,
+          crc: crc32(bytes),
+          size: bytes.length
+        });
+        zipBytesRef.total += bytes.length;
+        return 'ok';
+      } else {
+        const bytes = await fetchDebToBuffer(pkg.url);
+        triggerDownload(new Blob([bytes], {type:'application/octet-stream'}), pkg.fileName);
+        await sleep(1000);
+        return 'ok';
+      }
+    } catch(e) {
+      if (e.message === 'cancelled') return 'cancelled';
+      fails.push({ pkg, error: e.message });
+      logLine('err', '✗ ' + pkg.fileName + ' — ' + e.message);
+      return 'fail';
     }
   }
-  
-  try{
-    log(`بدء تحميل ${total} · توازي ${Math.min(5,total)} · ${saveMode}`);
-    const workers=Array.from({length:Math.min(5,total)},()=>worker());
+
+  async function worker() {
+    while (true) {
+      if (state.cancelled) return;
+      const idx = nextIndex++;
+      if (idx >= list.length) return;
+      const status = await handleOne(list[idx]);
+      if (status === 'ok') okC++;
+      else if (status === 'fail') failC++;
+      else if (status === 'skip') skipC++;
+      done++;
+      updateProg();
+    }
+  }
+
+  try {
+    const workers = Array.from({length: Math.min(state.jobs, total)}, () => worker());
     await Promise.all(workers);
-    
-    if(saveMode==='zip'&&zipEntries.length){
-      log('بناء ZIP ('+fmtSize(zipEntries.reduce((a,b)=>a+b.size,0))+')…');
-      const blob=buildZip(zipEntries);
-      triggerDl(blob,`${rn}_${new Date().toISOString().slice(0,10)}.zip`);
-      ok('ZIP: '+fmtSize(blob.size));
+
+    if (state.saveMode === 'zip' && zipEntries.length) {
+      log('بناء الأرشيف ZIP…');
+      const blob = buildZip(zipEntries);
+      const fname = `${rn}_debs_${new Date().toISOString().slice(0,10)}.zip`;
+      triggerDownload(blob, fname);
+      ok(`تم إنشاء الأرشيف: ${fname} (${fmtSize(blob.size)})`);
     }
-    
-    dim('─────────────────────');
-    ok(`نجح ${okC} · فشل ${failC} · تخطّى ${skipC}`);
-    
-    if(fails.length){
-      warn('فشلت:');
-      fails.slice(0,10).forEach(p=>logLine('err','• '+p.fileName));
-      if(fails.length>10)dim(`… و${fails.length-10} أخرى`);
+
+    $('#progLabel').textContent = state.cancelled ? 'تم الإيقاف' : 'اكتمل التحميل';
+    if (!state.cancelled) { $('#progPct').textContent = '100%'; $('#progBar').style.width = '100%'; }
+
+    dim('─────────────────────────────');
+    ok(`نجح: ${okC} · فشل: ${failC} · تخطّى: ${skipC}`);
+    dim('─────────────────────────────');
+
+    if (fails.length) {
+      warn('حزم فشلت:');
+      fails.slice(0, 15).forEach(f => logLine('err', '• ' + f.pkg.fileName + ' — ' + f.error));
+      if (fails.length > 15) dim(`… و${fails.length - 15} أخرى`);
+      toast(`${failC} حزمة فشلت`, 'warn');
+    } else {
+      toast('اكتمل التحميل بنجاح ✓', 'ok');
     }
-    toast(`اكتمل: ${okC} نجح`,fails.length?'warn':'ok');
-  }catch(e){
-    err('خطأ: '+e.message);
-  }finally{
-    state.running=false;
-    $('#cancelBtn').classList.add('hidden');
-    renderTable();
+  } catch(e) {
+    err('خطأ عام: ' + e.message);
+    toast('خطأ أثناء التحميل', 'err');
+  } finally {
+    state.running = false;
+    $('#cancelBtn').style.display = 'none';
+    updateSelStat();
   }
 }
 
-function triggerDl(data,name){
-  const blob=data instanceof Blob?data:new Blob([data],{type:'application/octet-stream'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download=name;
-  document.body.appendChild(a);a.click();a.remove();
-  setTimeout(()=>URL.revokeObjectURL(a.href),60000);
-}
-
-/* ═════════ ZIP WRITER ═════════ */
-let _crc=null;
-function crc32(u8){
-  if(!_crc){
-    _crc=new Uint32Array(256);
-    for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);_crc[n]=c>>>0}
+/* ═══════ INIT ═══════ */
+(function init() {
+  if (!window.showDirectoryPicker) {
+    const fsChip = document.querySelector('[data-save="fs"]');
+    if (fsChip) {
+      fsChip.style.opacity = '.5';
+      fsChip.title = 'غير مدعوم — استخدم Chrome/Edge';
+      // fall back to zip
+      fsChip.classList.remove('on');
+      document.querySelector('[data-save="zip"]').classList.add('on');
+      state.saveMode = 'zip';
+    }
   }
-  let c=0xFFFFFFFF;
-  for(let i=0;i<u8.length;i++)c=_crc[(c^u8[i])&0xFF]^(c>>>8);
-  return (c^0xFFFFFFFF)>>>0;
-}
-function buildZip(entries){
-  const enc=new TextEncoder(),parts=[],cd=[];let off=0;
-  for(const e of entries){
-    const nb=enc.encode(e.name);
-    const lh=new Uint8Array(30+nb.length),d1=new DataView(lh.buffer);
-    d1.setUint32(0,0x04034b50,true);d1.setUint16(4,20,true);d1.setUint16(6,0x0800,true);
-    d1.setUint32(14,e.crc,true);d1.setUint32(18,e.size,true);d1.setUint32(22,e.size,true);
-    d1.setUint16(26,nb.length,true);lh.set(nb,30);
-    parts.push(lh,e.data);
-    const c=new Uint8Array(46+nb.length),d2=new DataView(c.buffer);
-    d2.setUint32(0,0x02014b50,true);d2.setUint16(4,20,true);d2.setUint16(6,20,true);
-    d2.setUint16(8,0x0800,true);d2.setUint32(16,e.crc,true);
-    d2.setUint32(20,e.size,true);d2.setUint32(24,e.size,true);
-    d2.setUint16(28,nb.length,true);d2.setUint32(42,off,true);
-    c.set(nb,46);cd.push(c);
-    off+=lh.length+e.data.length;
-  }
-  const cs=cd.reduce((a,b)=>a+b.length,0);
-  const eo=new Uint8Array(22),d3=new DataView(eo.buffer);
-  d3.setUint32(0,0x06054b50,true);d3.setUint16(8,entries.length,true);
-  d3.setUint16(10,entries.length,true);d3.setUint32(12,cs,true);d3.setUint32(16,off,true);
-  return new Blob([...parts,...cd,eo],{type:'application/zip'});
-}
-
-/* ═════════ INIT ═════════ */
-(function init(){
-  info('v4.0 جاهز — خفيف وسريع');
-  dim('نصيحة: للتحميل ∞ استخدم Chrome + «📁 مجلد مباشر»');
-  dim('إذا فشل سورس: ⚙️ → فعّل بروكسي آخر');
+  info('repodeb web v3.0 Lite جاهز — خفيف وبدون خلفية متحركة.');
+  info('ضع رابط السورس ثم اضغط «فحص السورس».');
+  dim('⚡ للتحميل غير المحدود ∞: استخدم Chrome + «📁 مجلد ∞»');
+  updateSelStat();
 })();
 </script>
 </body>
